@@ -85,6 +85,10 @@ body {
 .sidebar {
   background-color: var(--card);
   border-right: 1px solid var(--border);
+  z-index: 1050 !important;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
 
   .sidebar-nav {
     background-color: var(--card);
@@ -111,6 +115,34 @@ body {
     font-size: var(--font-size-xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
+  }
+}
+
+// Mobile sidebar fixes
+@media (max-width: 991.98px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+    box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .wrapper {
+    padding-inline: 0 !important;
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -189,6 +221,22 @@ body {
   background-color: var(--card) !important;
   border-right: 1px solid var(--border) !important;
   border-left: none !important;
+  z-index: 1050 !important;
+  position: fixed !important;
+  height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+
+  @media (max-width: 991.98px) {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+
+    &.show {
+      transform: translateX(0);
+      box-shadow: 0 0 50px 0 rgba(0, 0, 0, 0.2);
+    }
+  }
 
   .shadcn-sidebar-header {
     background-color: var(--card) !important;

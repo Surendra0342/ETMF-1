@@ -3,7 +3,7 @@ import { MetricCard } from '../../components'
 import { Card, CardContent } from 'src/components'
 import { CRow, CCol } from '@coreui/react'
 import { CChartBar } from '@coreui/react-chartjs'
-import WorldMap from './WorldMap'
+// import WorldMap from './WorldMap'
 import './Dashboard.scss'
 
 const Dashboard = () => {
