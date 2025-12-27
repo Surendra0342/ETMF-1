@@ -1,0 +1,165 @@
+// Card Component Styles - Shadcn Inspired
+.custom-card {
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+  color: var(--card-foreground);
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+  }
+}
+
+.custom-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.custom-card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  margin: 0;
+}
+
+.custom-card-description {
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+
+.custom-card-content {
+  padding: 1.5rem;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--card-foreground);
+}
+
+.custom-card-footer {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  padding-top: 0;
+  font-size: var(--font-size-sm);
+  color: var(--muted-foreground);
+}
+
+// Metric Card Styles
+.metric-card {
+  position: relative;
+  background-color: var(--card);
+  padding: 1.5rem;
+  border-radius: 8px;
+  outline: 1px solid var(--border);
+  outline-offset: -1px;
+  box-shadow: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.metric-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.metric-card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+}
+
+.metric-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--muted-foreground);
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.metric-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.metric-card-value {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--foreground);
+  letter-spacing: -0.025em;
+}
+
+.metric-card-change {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+
+  &.positive {
+    color: #10b981;
+  }
+
+  &.negative {
+    color: #ef4444;
+  }
+
+  &.neutral {
+    color: var(--muted-foreground);
+  }
+}
+
+// Dark mode adjustments
+[data-coreui-theme="dark"] {
+  .metric-card-change {
+    &.positive {
+      color: #34d399;
+    }
+
+    &.negative {
+      color: #f87171;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .custom-card-header,
+  .custom-card-content,
+  .custom-card-footer {
+    padding: 1rem;
+  }
+
+  .custom-card-footer {
+    padding-top: 0;
+  }
+
+  .metric-card {
+    padding: 1rem;
+  }
+
+  .metric-card-value {
+    font-size: 28px;
+  }
+}

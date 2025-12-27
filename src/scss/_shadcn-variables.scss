@@ -1,0 +1,149 @@
+// Shadcn Design System Variables
+//  Based on shadcn/ui color system and spacing
+
+:root {
+  // === Color System ===
+
+  // Background colors
+  --background: #ffffff;
+  --foreground: #18181b; // zinc-900
+
+  // Card colors
+  --card: #ffffff;
+  --card-foreground: #18181b;
+
+  // Primary colors
+  --primary: #18181b; // zinc-900
+  --primary-foreground: #fafafa; // zinc-50
+
+  // Secondary colors
+  --secondary: #f4f4f5; // zinc-100
+  --secondary-foreground: #18181b;
+
+  // Muted colors
+  --muted: #f4f4f5; // zinc-100
+  --muted-foreground: #71717a; // zinc-500
+
+  // Accent colors
+  --accent: #f4f4f5; // zinc-100
+  --accent-foreground: #18181b;
+
+  // Destructive colors
+  --destructive: #ef4444; // red-500
+  --destructive-foreground: #fafafa;
+
+  // Border colors
+  --border: #e4e4e7; // zinc-200
+  --input: #e4e4e7;
+  --ring: #18181b;
+
+  // === Spacing System ===
+  --spacing-xs: 0.5rem;    // 8px
+  --spacing-sm: 0.75rem;   // 12px
+  --spacing-md: 1rem;      // 16px
+  --spacing-lg: 1.5rem;    // 24px
+  --spacing-xl: 2rem;      // 32px
+  --spacing-2xl: 3rem;     // 48px
+  --spacing-3xl: 4rem;     // 64px
+
+  // === Border Radius ===
+  --radius-sm: 0.375rem;   // 6px
+  --radius-md: 0.5rem;     // 8px
+  --radius-lg: 0.75rem;    // 12px
+  --radius-xl: 1rem;       // 16px
+
+  // === Typography ===
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  --font-size-xs: 0.75rem;     // 12px
+  --font-size-sm: 0.875rem;    // 14px
+  --font-size-base: 1rem;      // 16px
+  --font-size-lg: 1.125rem;    // 18px
+  --font-size-xl: 1.25rem;     // 20px
+  --font-size-2xl: 1.5rem;     // 24px
+  --font-size-3xl: 1.875rem;   // 30px
+  --font-size-4xl: 2.25rem;    // 36px
+
+  // === Shadows ===
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+  // === Layout ===
+  --sidebar-width: 16rem;      // 256px
+  --header-height: 3.5rem;     // 56px
+  --container-padding: 1.5rem; // 24px
+}
+
+// Dark mode colors
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #09090b; // zinc-950
+    --foreground: #fafafa; // zinc-50
+
+    --card: #18181b; // zinc-900
+    --card-foreground: #fafafa;
+
+    --primary: #fafafa;
+    --primary-foreground: #18181b;
+
+    --secondary: #27272a; // zinc-800
+    --secondary-foreground: #fafafa;
+
+    --muted: #27272a;
+    --muted-foreground: #a1a1aa; // zinc-400
+
+    --accent: #27272a;
+    --accent-foreground: #fafafa;
+
+    --destructive: #7f1d1d; // red-900
+    --destructive-foreground: #fafafa;
+
+    --border: #27272a; // zinc-800
+    --input: #27272a;
+    --ring: #d4d4d8; // zinc-300
+  }
+}
+
+// Force light mode class
+[data-coreui-theme="light"] {
+  --background: #ffffff;
+  --foreground: #18181b;
+  --card: #ffffff;
+  --card-foreground: #18181b;
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+}
+
+// Force dark mode class
+[data-coreui-theme="dark"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+
+  --card: #18181b;
+  --card-foreground: #fafafa;
+
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+
+  --destructive: #7f1d1d;
+  --destructive-foreground: #fafafa;
+
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #d4d4d8;
+}

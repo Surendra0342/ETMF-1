@@ -1,0 +1,294 @@
+// Register Page Styles - Shadcn Inspired
+.register-page {
+  min-height: 100vh;
+  background: #ffffff;
+  background-size: cover;
+  position: relative;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  .register-card {
+    animation: fadeInUp 0.5s ease;
+  }
+
+  .register-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    .register-logo {
+      width: 64px;
+      height: 64px;
+      background: #f4f4f5;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      svg {
+        color: #764ba2;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .register-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #18181b;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .register-subtitle {
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: #52525b;
+      margin-bottom: 0;
+    }
+  }
+
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #e4e4e7;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .card-body {
+      padding: 2rem !important;
+    }
+  }
+
+  .form-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #18181b;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .form-input {
+    height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 400;
+    border: 1px solid #e4e4e7;
+    border-radius: 8px;
+    padding: 0.625rem 0.875rem;
+    transition: all 0.2s ease;
+    color: #18181b;
+
+    &::placeholder {
+      color: #a1a1aa;
+      font-weight: 400;
+    }
+
+    &:focus {
+      border-color: #764ba2;
+      box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+      outline: none;
+    }
+
+    &.is-invalid {
+      border-color: #ef4444;
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+  }
+
+  .invalid-feedback {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #ef4444;
+    margin-top: 0.375rem;
+  }
+
+  .password-hint {
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: #71717a;
+    margin-top: 0.375rem;
+  }
+
+  .terms-check {
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid #d4d4d8;
+      border-radius: 4px;
+      margin-top: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:checked {
+        background-color: #764ba2;
+        border-color: #764ba2;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+      }
+    }
+
+    .form-check-label {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: #52525b;
+      margin-left: 0.5rem;
+      cursor: pointer;
+
+      .terms-link {
+        color: #764ba2;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: #5d3a7f;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .register-button {
+    height: 44px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: none;
+    background: #18181b;
+    color: #ffffff;
+    transition: all 0.2s ease;
+    letter-spacing: -0.01em;
+
+    &:hover:not(:disabled) {
+      background: #27272a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .register-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+
+    .login-text {
+      font-size: 0.9375rem;
+      font-weight: 400;
+      color: #52525b;
+      margin-bottom: 0;
+
+      .login-link {
+        font-weight: 600;
+        color: #764ba2;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #5d3a7f;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .register-page {
+    .card {
+      background: #18181b;
+    }
+
+    .form-label {
+      color: #fafafa;
+    }
+
+    .form-input {
+      background: #27272a;
+      border-color: #3f3f46;
+      color: #fafafa;
+
+      &::placeholder {
+        color: #71717a;
+      }
+
+      &:focus {
+        border-color: #764ba2;
+        background: #27272a;
+      }
+    }
+
+    .password-hint {
+      color: #a1a1aa;
+    }
+
+    .terms-check {
+      .form-check-label {
+        color: #d4d4d8;
+
+        .terms-link {
+          color: #a78bfa;
+
+          &:hover {
+            color: #c4b5fd;
+          }
+        }
+      }
+    }
+
+    .register-button {
+      background: #764ba2;
+      color: #ffffff;
+
+      &:hover:not(:disabled) {
+        background: #5d3a7f;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 576px) {
+  .register-page {
+    .card {
+      .card-body {
+        padding: 1.5rem !important;
+      }
+    }
+
+    .register-header {
+      .register-title {
+        font-size: 1.5rem;
+      }
+
+      .register-subtitle {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
