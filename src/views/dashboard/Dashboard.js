@@ -162,7 +162,7 @@ const Dashboard = () => {
             <CardContent>
               <h2 className="dashboard-chart-title">Studies by Country</h2>
               <div className="dashboard-world-map">
-                <WorldMap />
+                {/* <WorldMap /> */}
               </div>
             </CardContent>
           </Card>
