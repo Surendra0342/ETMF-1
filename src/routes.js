@@ -36,6 +36,10 @@ const RolesManagement = React.lazy(() => import('./views/administration/RolesMan
 // Job Title
 const JobTitle = React.lazy(() => import('./views/jobtitle/JobTitle'))
 
+// Form Builder
+const FormBuilder = React.lazy(() => import('./views/forms/FormBuilder/FormBuilder'))
+const VisualFormBuilder = React.lazy(() => import('./views/forms/FormBuilder/VisualFormBuilder'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -77,6 +81,10 @@ const routes = [
 
   // Job Title Routes
   { path: '/jobtitle', name: 'Job Title', element: JobTitle },
+
+  // Form Builder Routes
+  // { path: '/forms/builder', name: 'Form Builder', element: FormBuilder },
+  { path: '/forms/visual-builder', name: 'Visual Form Builder', element: VisualFormBuilder },
 ]
 
 export default routes

@@ -4,6 +4,7 @@ import {
   cilBriefcase,
   cilPeople,
   cilCog,
+  cilNotes,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem } from '@coreui/react'
 
@@ -50,6 +51,23 @@ const _nav = [
         component: CNavItem,
         name: 'Demo Requests',
         to: '/team/demo-requests',
+      },
+    ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Form Builder',
+    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Visual Builder',
+        to: '/forms/visual-builder',
+      },
+      {
+        component: CNavItem,
+        name: 'JSON Builder',
+        to: '/forms/builder',
       },
     ],
   },
