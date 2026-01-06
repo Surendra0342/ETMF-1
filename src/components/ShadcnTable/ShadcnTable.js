@@ -236,9 +236,13 @@ const TasksTable = ({
 
   // Filter data
   const filteredData = data.filter((row) => {
+    // Search across all column keys defined in columns prop
     const matchesSearch = searchTerm === '' || 
-      row.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.title.toLowerCase().includes(searchTerm.toLowerCase());
+      columns.some((column) => {
+        const value = row[column.key];
+        if (value === null || value === undefined) return false;
+        return String(value).toLowerCase().includes(searchTerm.toLowerCase());
+      });
     
     const matchesStatus = statusFilter.length === 0 || statusFilter.includes(row.status);
     const matchesPriority = priorityFilter.length === 0 || priorityFilter.includes(row.priority);
