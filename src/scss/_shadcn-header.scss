@@ -1,137 +1,148 @@
 // Shadcn-Inspired Header Styles
 @use './shadcn-variables';
 
-.header {
+.shadcn-header.header {
   position: sticky;
   top: 0;
   z-index: 50;
   width: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.2s ease;
-
-  @media (prefers-color-scheme: dark) {
-    background-color: rgba(9, 9, 11, 0.8);
-  }
-
-  [data-coreui-theme="dark"] & {
-    background-color: rgba(9, 9, 11, 0.8);
-  }
-
-  [data-coreui-theme="light"] & {
-    background-color: rgba(255, 255, 255, 0.8);
-  }
+  background-color: var(--card);
+  border-bottom: none;
+  padding: 0;
 
   &.shadow-sm {
     box-shadow: var(--shadow-sm);
   }
 }
 
-.header-container {
+.shadcn-header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: var(--header-height);
-  padding: 0 var(--container-padding);
+  padding: 0 16px !important;
 }
 
-// Header Toggle (Mobile Menu)
-.header-toggler {
+// Icon Button (Toggle, Theme, etc.)
+.shadcn-icon-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 36px;
+  height: 36px;
   padding: 0;
   background-color: transparent;
   border: none;
   border-radius: var(--radius-md);
   color: var(--foreground);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 
   &:hover {
     background-color: var(--muted);
   }
 
-  &:active {
-    background-color: var(--secondary);
+  &:focus {
+    outline: none;
+  }
+
+  &::after {
+    display: none !important;
   }
 }
 
-// Header Navigation
-.header-nav {
+// Search Button
+.shadcn-search-btn {
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  height: 36px;
+  padding: 0 var(--spacing-sm) 0 var(--spacing-md);
+  background-color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--muted-foreground);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 200px;
 
-  .nav-item {
-    list-style: none;
+  &:hover {
+    background-color: var(--secondary);
   }
 
-  .nav-link {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-sm);
-    font-weight: 500;
-    color: var(--muted-foreground);
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: var(--muted);
-      color: var(--foreground);
-    }
-
-    &.active {
-      background-color: var(--secondary);
-      color: var(--foreground);
-    }
+  span {
+    flex: 1;
+    text-align: left;
   }
 
-  .nav-icon-link {
-    display: flex;
+  kbd {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    border-radius: var(--radius-md);
+    height: 20px;
+    padding: 0 6px;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-family: inherit;
     color: var(--muted-foreground);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-
-    &:hover {
-      background-color: var(--muted);
-      color: var(--foreground);
-    }
-
-    .badge {
-      position: absolute;
-      top: 0.25rem;
-      right: 0.25rem;
-      width: 0.5rem;
-      height: 0.5rem;
-      background-color: var(--destructive);
-      border-radius: 50%;
-      border: 2px solid var(--card);
-    }
   }
 }
 
-// Header Divider
-.header-divider {
-  width: 1px;
-  height: 1.5rem;
-  background-color: var(--border);
-  margin: 0 var(--spacing-xs);
+// User Avatar Button
+.shadcn-avatar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background-color: var(--muted);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Dropdown Menu
+.shadcn-dropdown-menu {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-xs);
+  min-width: 120px;
+}
+
+.shadcn-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--foreground);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+
+  &:hover {
+    background-color: var(--muted);
+  }
+
+  &.active {
+    background-color: var(--muted);
+  }
 }
 
 // Breadcrumb Container
@@ -179,13 +190,13 @@
   }
 }
 
-// Dropdown Menu
+// General Dropdown overrides
 .dropdown-menu {
-  min-width: 12rem;
+  min-width: 10rem;
   padding: var(--spacing-xs);
   background-color: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
 
   .dropdown-item {
@@ -197,11 +208,11 @@
     color: var(--foreground);
     background-color: transparent;
     border: none;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     width: 100%;
     text-align: left;
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
 
     &:hover {
       background-color: var(--muted);
@@ -220,52 +231,9 @@
   }
 }
 
-// Responsive Header
+// Responsive
 @media (max-width: 768px) {
-  .header-nav.d-none.d-md-flex {
+  .shadcn-search-btn {
     display: none !important;
-  }
-
-  .header-container {
-    padding: 0 var(--spacing-md);
-  }
-}
-
-// Search Input in Header
-.header-search {
-  position: relative;
-  width: 100%;
-  max-width: 20rem;
-
-  input {
-    width: 100%;
-    padding: var(--spacing-sm) var(--spacing-md);
-    padding-left: 2.5rem;
-    font-size: var(--font-size-sm);
-    background-color: var(--muted);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    color: var(--foreground);
-    outline: none;
-    transition: all 0.2s ease;
-
-    &::placeholder {
-      color: var(--muted-foreground);
-    }
-
-    &:focus {
-      background-color: var(--background);
-      border-color: var(--ring);
-      box-shadow: 0 0 0 3px rgba(24, 24, 27, 0.1);
-    }
-  }
-
-  .search-icon {
-    position: absolute;
-    left: var(--spacing-sm);
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted-foreground);
-    pointer-events: none;
   }
 }

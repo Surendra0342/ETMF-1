@@ -18,9 +18,9 @@ export const AppSidebarNav = ({ items }) => {
                 <span className="nav-icon-bullet"></span>
               </span>
             )}
-        {name && name}
+        <span className="nav-name">{name}</span>
         {badge && (
-          <CBadge color={badge.color} className="ms-auto" size="sm">
+          <CBadge color={badge.color} className="shadcn-badge" size="sm">
             {badge.text}
           </CBadge>
         )}
@@ -38,6 +38,7 @@ export const AppSidebarNav = ({ items }) => {
             {...(rest.to && { as: NavLink })}
             {...(rest.href && { target: '_blank', rel: 'noopener noreferrer' })}
             {...rest}
+            className="shadcn-nav-link"
           >
             {navLink(name, icon, badge, indent)}
           </CNavLink>
@@ -52,7 +53,14 @@ export const AppSidebarNav = ({ items }) => {
     const { component, name, icon, items, to, ...rest } = item
     const Component = component
     return (
-      <Component compact as="div" key={index} toggler={navLink(name, icon)} {...rest}>
+      <Component 
+        compact 
+        as="div" 
+        key={index} 
+        toggler={navLink(name, icon)} 
+        className="shadcn-nav-group"
+        {...rest}
+      >
         {items?.map((item, index) =>
           item.items ? navGroup(item, index) : navItem(item, index, true),
         )}
@@ -60,10 +68,23 @@ export const AppSidebarNav = ({ items }) => {
     )
   }
 
+  const navTitle = (item, index) => {
+    return (
+      <div key={index} className="shadcn-nav-title">
+        {item.title}
+      </div>
+    )
+  }
+
   return (
-    <CSidebarNav as={SimpleBar}>
+    <CSidebarNav as={SimpleBar} className="shadcn-sidebar-nav">
       {items &&
-        items.map((item, index) => (item.items ? navGroup(item, index) : navItem(item, index)))}
+        items.map((item, index) => {
+          if (item.title) {
+            return navTitle(item, index)
+          }
+          return item.items ? navGroup(item, index) : navItem(item, index)
+        })}
     </CSidebarNav>
   )
 }

@@ -5,10 +5,16 @@ import {
   cilPeople,
   cilCog,
   cilNotes,
+  cilMedicalCross,
+  cilInfo,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem } from '@coreui/react'
 
 const _nav = [
+  // General Section
+  {
+    title: 'General',
+  },
   {
     component: CNavItem,
     name: 'Dashboard',
@@ -54,6 +60,11 @@ const _nav = [
       },
     ],
   },
+
+  // Pages Section
+  {
+    title: 'Pages',
+  },
   {
     component: CNavGroup,
     name: 'Form Builder',
@@ -70,6 +81,28 @@ const _nav = [
         to: '/forms/builder',
       },
     ],
+  },
+  {
+    component: CNavGroup,
+    name: 'Clinical Data',
+    icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Patients',
+        to: '/patients',
+      },
+      {
+        component: CNavItem,
+        name: 'Sites',
+        to: '/sites',
+      },
+    ],
+  },
+
+  // Other Section  
+  {
+    title: 'Other',
   },
   {
     component: CNavGroup,
@@ -92,6 +125,12 @@ const _nav = [
         to: '/settings/activity-log',
       },
     ],
+  },
+  {
+    component: CNavItem,
+    name: 'Help Center',
+    to: '/help',
+    icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
   },
 ]
 

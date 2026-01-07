@@ -81,41 +81,9 @@ body {
   border-top: 1px solid var(--border);
 }
 
-// Sidebar styling overrides
+// Sidebar styling overrides - moved to _shadcn-sidebar.scss
 .sidebar {
-  background-color: var(--card);
-  border-right: 1px solid var(--border);
   z-index: 1050 !important;
-  position: fixed;
-  height: 100vh;
-  overflow-y: auto;
-
-  .sidebar-nav {
-    background-color: var(--card);
-  }
-
-  .nav-link {
-    color: var(--muted-foreground);
-    transition: all 0.2s ease;
-
-    &:hover {
-      background-color: var(--muted);
-      color: var(--foreground);
-    }
-
-    &.active {
-      background-color: var(--secondary);
-      color: var(--foreground);
-      font-weight: 500;
-    }
-  }
-
-  .nav-title {
-    color: var(--muted-foreground);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
 }
 
 // Mobile sidebar fixes

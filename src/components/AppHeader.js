@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import {
   CContainer,
@@ -10,22 +9,24 @@ import {
   CHeader,
   CHeaderNav,
   CHeaderToggler,
-  CNavLink,
   CNavItem,
   useColorModes,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
   cilContrast,
-  cilEnvelopeOpen,
-  cilList,
   cilMenu,
   cilMoon,
   cilSun,
 } from '@coreui/icons'
 
-import { AppHeaderDropdown } from './header/index'
+// Search icon component
+const SearchIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="11" cy="11" r="8"/>
+    <path d="m21 21-4.3-4.3"/>
+  </svg>
+)
 
 const AppHeader = () => {
   const headerRef = useRef()
@@ -45,50 +46,31 @@ const AppHeader = () => {
   }, [])
 
   return (
-    <CHeader position="sticky" className="shadcn-header p-0" ref={headerRef}>
-      <CContainer className="shadcn-header-container px-4" fluid>
-        <CHeaderToggler
-          className="shadcn-header-toggler"
-          onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
-        >
-          <CIcon icon={cilMenu} size="lg" />
-        </CHeaderToggler>
-        {/* <CHeaderNav className="d-none d-md-flex">
-          <CNavItem>
-            <CNavLink to="/dashboard" as={NavLink}>
-              Dashboard
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
-          </CNavItem>
-        </CHeaderNav> */}
-        <CHeaderNav className="ms-auto">
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilList} size="lg" />
-            </CNavLink>
-          </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">
-              <CIcon icon={cilEnvelopeOpen} size="lg" />
-            </CNavLink>
-          </CNavItem>
-        </CHeaderNav>
-        <CHeaderNav>
-          <li className="nav-item py-1">
-            <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
-          </li>
+    <CHeader position="sticky" className="shadcn-header" ref={headerRef}>
+      <CContainer className="shadcn-header-container" fluid>
+        {/* Left side - Toggle and Search */}
+        <div className="d-flex align-items-center gap-2">
+          <CHeaderToggler
+            className="shadcn-icon-btn"
+            onClick={() => dispatch({ type: 'set', sidebarShow: !sidebarShow })}
+            title="Toggle Sidebar"
+          >
+            <CIcon icon={cilMenu} size="lg" />
+          </CHeaderToggler>
+          
+          {/* Search Button */}
+          <button className="shadcn-search-btn d-none d-md-flex">
+            <SearchIcon />
+            <span>Search</span>
+            <kbd>⌘K</kbd>
+          </button>
+        </div>
+
+        {/* Right side - Theme toggle and User */}
+        <CHeaderNav className="d-flex align-items-center gap-1">
+          {/* Theme Toggle */}
           <CDropdown variant="nav-item" placement="bottom-end">
-            <CDropdownToggle caret={false}>
+            <CDropdownToggle className="shadcn-icon-btn" caret={false} title="Toggle theme">
               {colorMode === 'dark' ? (
                 <CIcon icon={cilMoon} size="lg" />
               ) : colorMode === 'auto' ? (
@@ -97,10 +79,10 @@ const AppHeader = () => {
                 <CIcon icon={cilSun} size="lg" />
               )}
             </CDropdownToggle>
-            <CDropdownMenu>
+            <CDropdownMenu className="shadcn-dropdown-menu">
               <CDropdownItem
                 active={colorMode === 'light'}
-                className="d-flex align-items-center"
+                className="shadcn-dropdown-item"
                 as="button"
                 type="button"
                 onClick={() => setColorMode('light')}
@@ -109,7 +91,7 @@ const AppHeader = () => {
               </CDropdownItem>
               <CDropdownItem
                 active={colorMode === 'dark'}
-                className="d-flex align-items-center"
+                className="shadcn-dropdown-item"
                 as="button"
                 type="button"
                 onClick={() => setColorMode('dark')}
@@ -118,7 +100,7 @@ const AppHeader = () => {
               </CDropdownItem>
               <CDropdownItem
                 active={colorMode === 'auto'}
-                className="d-flex align-items-center"
+                className="shadcn-dropdown-item"
                 as="button"
                 type="button"
                 onClick={() => setColorMode('auto')}
@@ -127,10 +109,13 @@ const AppHeader = () => {
               </CDropdownItem>
             </CDropdownMenu>
           </CDropdown>
-          <li className="nav-item py-1">
-            <div className="vr h-100 mx-2 text-body text-opacity-75"></div>
-          </li>
-          {/* <AppHeaderDropdown /> */}
+
+          {/* User Avatar */}
+          <CNavItem>
+            <button className="shadcn-avatar-btn">
+              <span>SN</span>
+            </button>
+          </CNavItem>
         </CHeaderNav>
       </CContainer>
     </CHeader>
