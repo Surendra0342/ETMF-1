@@ -1,6 +1,6 @@
 // Landing Page Styles - All styles scoped to .landing-page to avoid sidebar conflicts
 
-// Variables
+// Variables - Light Theme (default)
 $lp-primary: #0ea5e9;
 $lp-primary-dark: #0284c7;
 $lp-secondary: #10b981;
@@ -12,11 +12,59 @@ $lp-white: #ffffff;
 $lp-gray-50: #f8fafc;
 $lp-gray-100: #f1f5f9;
 $lp-gray-200: #e2e8f0;
+$lp-gray-300: #cbd5e1;
+$lp-gray-400: #94a3b8;
 $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+
+// CSS Custom Properties for Theme Support
+.landing-page {
+  // Light theme variables (default)
+  --lp-bg: #{$lp-white};
+  --lp-bg-alt: #{$lp-gray-50};
+  --lp-bg-card: #{$lp-white};
+  --lp-text-primary: #{$lp-text-primary};
+  --lp-text-secondary: #{$lp-text-secondary};
+  --lp-border: #{$lp-gray-200};
+  --lp-header-bg: rgba(255, 255, 255, 0.95);
+  --lp-header-shadow: rgba(0, 0, 0, 0.08);
+  --lp-card-shadow: rgba(0, 0, 0, 0.08);
+  --lp-marquee-item-bg: #{$lp-white};
+}
+
+// Dark theme - triggered by data attribute or system preference
+.landing-page[data-theme="dark"],
+.landing-page.dark-theme {
+  --lp-bg: #{$lp-dark-bg};
+  --lp-bg-alt: #{$lp-dark-surface};
+  --lp-bg-card: #{$lp-dark-surface};
+  --lp-text-primary: #f1f5f9;
+  --lp-text-secondary: #94a3b8;
+  --lp-border: #334155;
+  --lp-header-bg: rgba(15, 23, 42, 0.95);
+  --lp-header-shadow: rgba(0, 0, 0, 0.3);
+  --lp-card-shadow: rgba(0, 0, 0, 0.3);
+  --lp-marquee-item-bg: #{$lp-dark-surface};
+}
+
+// System preference dark mode
+@media (prefers-color-scheme: dark) {
+  .landing-page:not([data-theme="light"]) {
+    --lp-bg: #{$lp-dark-bg};
+    --lp-bg-alt: #{$lp-dark-surface};
+    --lp-bg-card: #{$lp-dark-surface};
+    --lp-text-primary: #f1f5f9;
+    --lp-text-secondary: #94a3b8;
+    --lp-border: #334155;
+    --lp-header-bg: rgba(15, 23, 42, 0.95);
+    --lp-header-shadow: rgba(0, 0, 0, 0.3);
+    --lp-card-shadow: rgba(0, 0, 0, 0.3);
+    --lp-marquee-item-bg: #{$lp-dark-surface};
+  }
+}
 
 .landing-page {
   min-height: 100vh;
-  background-color: $lp-white;
+  background-color: var(--lp-bg);
   overflow-x: hidden;
 
   // Header
@@ -30,13 +78,13 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     transition: all 0.3s ease;
 
     &.scrolled {
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--lp-header-bg);
       backdrop-filter: blur(20px);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px var(--lp-header-shadow);
 
       .landing-logo-text,
       .landing-nav-link {
-        color: $lp-text-primary;
+        color: var(--lp-text-primary);
       }
 
       .landing-logo-icon {
@@ -45,7 +93,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
       }
 
       .landing-btn-signin {
-        color: $lp-text-primary;
+        color: var(--lp-text-primary);
       }
     }
 
@@ -66,6 +114,12 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     display: flex;
     align-items: center;
     gap: 0.75rem;
+  }
+
+  .landing-logo-img {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
   }
 
   .landing-logo-icon {
@@ -130,6 +184,36 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     gap: 0.75rem;
   }
 
+  .landing-theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: $lp-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(15deg);
+    }
+  }
+
+  &.scrolled .landing-theme-toggle,
+  &.dark-theme .landing-header.scrolled .landing-theme-toggle {
+    background: var(--lp-bg-alt);
+    border-color: var(--lp-border);
+    color: var(--lp-text-primary);
+
+    &:hover {
+      background: var(--lp-border);
+    }
+  }
+
   .landing-btn-signin {
     color: $lp-white;
     font-weight: 500;
@@ -174,6 +258,127 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     @media (max-width: 768px) {
       min-height: auto;
       padding: 7rem 1.5rem 3rem;
+    }
+  }
+
+  // Carousel Styles
+  .landing-hero-carousel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+
+  .landing-hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  .landing-hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.6) 50%,
+      rgba(0, 0, 0, 0.75) 100%
+    );
+    z-index: 1;
+  }
+
+  .landing-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 15;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $lp-white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .landing-carousel-prev {
+    left: 2rem;
+
+    @media (max-width: 768px) {
+      left: 1rem;
+    }
+  }
+
+  .landing-carousel-next {
+    right: 2rem;
+
+    @media (max-width: 768px) {
+      right: 1rem;
+    }
+  }
+
+  .landing-carousel-indicators {
+    position: absolute;
+    bottom: 140px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.75rem;
+    z-index: 15;
+
+    @media (max-width: 768px) {
+      bottom: 180px;
+    }
+  }
+
+  .landing-carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    &.active {
+      background: $lp-primary;
+      width: 32px;
+      border-radius: 6px;
     }
   }
 
@@ -239,11 +444,11 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-hero-title {
     font-size: 3.5rem;
     font-weight: 800;
-    color: $lp-white;
+    color: #ffffff !important;
     margin-bottom: 1.5rem;
     line-height: 1.15;
     letter-spacing: -0.03em;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 0, 0, 0.3);
 
     @media (max-width: 992px) {
       font-size: 2.75rem;
@@ -259,17 +464,18 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: #4ade80; /* Fallback for browsers that don't support background-clip */
   }
 
   .landing-hero-subtitle {
     font-size: 1.25rem;
-    color: rgba(255, 255, 255, 0.95);
+    color: #ffffff !important;
     margin-bottom: 2.5rem;
     line-height: 1.7;
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
-    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 
     @media (max-width: 768px) {
       font-size: 1rem;
@@ -292,28 +498,31 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     font-weight: 600;
     border-radius: 12px;
     transition: all 0.3s ease;
+    color: $lp-white !important;
 
     &.landing-cta-primary {
       background: $lp-gradient-primary;
       border: none;
-      color: $lp-white;
+      color: $lp-white !important;
       box-shadow: 0 10px 30px rgba(14, 165, 233, 0.35);
 
       &:hover {
         transform: translateY(-3px);
         box-shadow: 0 15px 40px rgba(14, 165, 233, 0.45);
+        color: $lp-white !important;
       }
     }
 
     &.landing-cta-secondary {
       background: rgba(255, 255, 255, 0.1);
       border: 2px solid rgba(255, 255, 255, 0.3);
-      color: $lp-white;
+      color: $lp-white !important;
       backdrop-filter: blur(10px);
 
       &:hover {
         background: rgba(255, 255, 255, 0.2);
         border-color: rgba(255, 255, 255, 0.5);
+        color: $lp-white !important;
       }
     }
   }
@@ -345,7 +554,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     display: block;
     font-size: 2.5rem;
     font-weight: 800;
-    color: $lp-white;
+    color: $lp-white !important;
     letter-spacing: -0.02em;
 
     @media (max-width: 768px) {
@@ -355,44 +564,90 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-stat-label {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.85) !important;
     margin-top: 0.25rem;
   }
 
   // Trusted Section
   .landing-trusted {
     padding: 3rem 2rem;
-    background: $lp-gray-50;
-    border-bottom: 1px solid $lp-gray-200;
+    background: var(--lp-bg-alt);
+    border-bottom: 1px solid var(--lp-border);
+    overflow: hidden;
   }
 
   .landing-trusted-label {
     text-align: center;
-    color: $lp-text-secondary;
+    color: var(--lp-text-secondary);
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 1.5rem;
   }
 
-  .landing-trusted-logos {
+  .landing-marquee {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    &::before {
+      left: 0;
+      background: linear-gradient(to right, var(--lp-bg-alt), transparent);
+    }
+
+    &::after {
+      right: 0;
+      background: linear-gradient(to left, var(--lp-bg-alt), transparent);
+    }
+  }
+
+  .landing-marquee-content {
     display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 3rem;
-    flex-wrap: wrap;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
 
   .landing-logo-item {
     font-size: 1.25rem;
     font-weight: 700;
-    color: $lp-gray-200;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    color: var(--lp-text-secondary);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background: var(--lp-marquee-item-bg);
+    box-shadow: 0 2px 8px var(--lp-card-shadow);
 
     &:hover {
       opacity: 1;
-      color: $lp-text-secondary;
+      color: $lp-primary;
+      transform: scale(1.05);
     }
   }
 
@@ -418,7 +673,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-section-title {
     font-size: 2.75rem;
     font-weight: 800;
-    color: $lp-text-primary;
+    color: var(--lp-text-primary);
     margin-bottom: 1rem;
     letter-spacing: -0.02em;
 
@@ -429,7 +684,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-section-subtitle {
     font-size: 1.125rem;
-    color: $lp-text-secondary;
+    color: var(--lp-text-secondary);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.7;
@@ -438,7 +693,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   // Platform Section
   .landing-platform {
     padding: 6rem 2rem;
-    background: $lp-white;
+    background: var(--lp-bg);
 
     @media (max-width: 768px) {
       padding: 4rem 1.5rem;
@@ -462,8 +717,8 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   }
 
   .landing-feature-card {
-    background: $lp-white;
-    border: 1px solid $lp-gray-200;
+    background: var(--lp-bg-card);
+    border: 1px solid var(--lp-border);
     border-radius: 20px;
     padding: 2rem;
     transition: all 0.4s ease;
@@ -484,7 +739,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
     &:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 20px 50px var(--lp-card-shadow);
       border-color: transparent;
 
       &::before {
@@ -512,13 +767,13 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-feature-title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: $lp-text-primary;
+    color: var(--lp-text-primary);
     margin-bottom: 0.75rem;
   }
 
   .landing-feature-desc {
     font-size: 0.9375rem;
-    color: $lp-text-secondary;
+    color: var(--lp-text-secondary);
     line-height: 1.6;
     margin-bottom: 1.25rem;
   }
@@ -541,7 +796,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   // Showcase Section
   .landing-showcase {
     padding: 6rem 2rem;
-    background: $lp-gray-50;
+    background: var(--lp-bg-alt);
 
     @media (max-width: 768px) {
       padding: 4rem 1.5rem;
@@ -565,7 +820,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-showcase-title {
     font-size: 2.5rem;
     font-weight: 800;
-    color: $lp-text-primary;
+    color: var(--lp-text-primary);
     margin-bottom: 1.5rem;
     line-height: 1.2;
     letter-spacing: -0.02em;
@@ -584,7 +839,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-showcase-desc {
     font-size: 1.0625rem;
-    color: $lp-text-secondary;
+    color: var(--lp-text-secondary);
     line-height: 1.7;
     margin-bottom: 2rem;
   }
@@ -602,13 +857,13 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     h4 {
       font-size: 1rem;
       font-weight: 600;
-      color: $lp-text-primary;
+      color: var(--lp-text-primary);
       margin-bottom: 0.25rem;
     }
 
     p {
       font-size: 0.875rem;
-      color: $lp-text-secondary;
+      color: var(--lp-text-secondary);
       margin: 0;
       line-height: 1.5;
     }
@@ -681,7 +936,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   // Benefits Section
   .landing-why-choose {
     padding: 6rem 2rem;
-    background: $lp-white;
+    background: var(--lp-bg);
 
     @media (max-width: 768px) {
       padding: 4rem 1.5rem;
@@ -709,13 +964,13 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     align-items: center;
     gap: 1rem;
     padding: 1.25rem;
-    background: $lp-gray-50;
+    background: var(--lp-bg-alt);
     border-radius: 12px;
     transition: all 0.3s ease;
 
     &:hover {
-      background: $lp-white;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      background: var(--lp-bg-card);
+      box-shadow: 0 10px 30px var(--lp-card-shadow);
       transform: translateY(-2px);
     }
   }
@@ -727,107 +982,178 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-benefit-text {
     font-size: 0.9375rem;
-    color: $lp-text-primary;
+    color: var(--lp-text-primary);
     font-weight: 500;
   }
 
   // Testimonial Section
   .landing-testimonial {
     padding: 6rem 2rem;
-    background: $lp-gray-50;
+    background: var(--lp-bg-alt);
+    text-align: center;
 
     @media (max-width: 768px) {
       padding: 4rem 1.5rem;
     }
   }
 
-  .landing-testimonial-card {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 0;
-    max-width: 1100px;
-    margin: 0 auto;
-    background: $lp-white;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  .landing-testimonial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba($lp-primary, 0.1);
+    color: $lp-primary;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+  }
 
-    @media (max-width: 992px) {
-      grid-template-columns: 1fr;
+  .landing-testimonial-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--lp-text-primary);
+    margin-bottom: 3rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+      margin-bottom: 2rem;
     }
   }
 
-  .landing-testimonial-content {
+  .landing-testimonial-carousel {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 60px;
+
+    @media (max-width: 768px) {
+      padding: 0 40px;
+    }
+  }
+
+  .landing-testimonial-card {
+    background: var(--lp-bg-card);
+    border-radius: 24px;
     padding: 3rem;
+    box-shadow: 0 20px 60px var(--lp-card-shadow);
+    text-align: center;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 
     @media (max-width: 768px) {
       padding: 2rem;
     }
   }
 
-  .landing-quote-icon {
-    font-size: 5rem;
-    line-height: 1;
-    color: $lp-gray-200;
-    font-family: Georgia, serif;
-    margin-bottom: -1rem;
-  }
-
-  .landing-testimonial-text {
-    font-size: 1.25rem;
-    color: $lp-text-primary;
-    line-height: 1.8;
-    margin-bottom: 2rem;
-    font-style: italic;
-
-    @media (max-width: 768px) {
-      font-size: 1.0625rem;
-    }
-  }
-
-  .landing-testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
   .landing-author-avatar {
-    width: 56px;
-    height: 56px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
+    margin: 0 auto 1.5rem;
+    border: 4px solid $lp-primary;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+  }
+
+  .landing-testimonial-text {
+    font-size: 1.125rem;
+    color: var(--lp-text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
     }
   }
 
   .landing-author-info {
     h4 {
-      font-size: 1rem;
+      font-size: 1.25rem;
       font-weight: 600;
-      color: $lp-text-primary;
+      color: var(--lp-text-primary);
       margin-bottom: 0.25rem;
     }
 
     p {
       font-size: 0.875rem;
-      color: $lp-text-secondary;
+      color: var(--lp-text-secondary);
       margin: 0;
     }
   }
 
-  .landing-testimonial-image {
-    @media (max-width: 992px) {
-      display: none;
+  .landing-testimonial-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--lp-bg-card);
+    border: 1px solid var(--lp-border);
+    color: var(--lp-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px var(--lp-card-shadow);
+    z-index: 10;
+
+    &:hover {
+      background: $lp-primary;
+      border-color: $lp-primary;
+      color: $lp-white;
     }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    @media (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  .landing-testimonial-prev {
+    left: 0;
+  }
+
+  .landing-testimonial-next {
+    right: 0;
+  }
+
+  .landing-testimonial-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .landing-testimonial-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $lp-gray-300;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &.active {
+      background: $lp-primary;
+      transform: scale(1.2);
+    }
+
+    &:hover:not(.active) {
+      background: $lp-gray-400;
     }
   }
 
@@ -882,7 +1208,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-cta-title {
     font-size: 2.75rem;
     font-weight: 800;
-    color: $lp-white;
+    color: $lp-white !important;
     margin-bottom: 1.25rem;
     letter-spacing: -0.02em;
 
@@ -893,7 +1219,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-cta-subtitle {
     font-size: 1.125rem;
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.85) !important;
     margin-bottom: 2rem;
     line-height: 1.7;
   }
@@ -940,7 +1266,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
 
   .landing-cta-note {
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.6) !important;
     margin: 0;
   }
 
@@ -979,6 +1305,12 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
       align-items: center;
       gap: 0.75rem;
       margin-bottom: 1.25rem;
+
+      .landing-footer-logo-img {
+        height: 36px;
+        width: auto;
+        object-fit: contain;
+      }
 
       .landing-logo-icon {
         width: 38px;
@@ -1030,7 +1362,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   }
 
   .landing-footer-column {
-    // Column styles
+    min-width: 0;
   }
 
   .landing-footer-heading {
@@ -1102,7 +1434,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   // Privacy Policy Section
   .landing-privacy-section {
     padding: 8rem 0 5rem;
-    background: $lp-white;
+    background: var(--lp-bg);
     min-height: calc(100vh - 200px);
   }
 
@@ -1116,10 +1448,10 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background: #f1f5f9;
+    background: var(--lp-bg-alt);
     border: none;
     border-radius: 8px;
-    color: #334155;
+    color: var(--lp-text-primary);
     font-size: 0.9375rem;
     font-weight: 500;
     cursor: pointer;
@@ -1127,7 +1459,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     margin-bottom: 2rem;
 
     &:hover {
-      background: #e2e8f0;
+      background: var(--lp-border);
       color: $lp-primary;
     }
   }
@@ -1135,10 +1467,10 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-privacy-title {
     font-size: 2.25rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--lp-text-primary);
     margin-bottom: 2.5rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--lp-border);
 
     @media (max-width: 768px) {
       font-size: 1.75rem;
@@ -1155,14 +1487,14 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
     h3 {
       font-size: 1.25rem;
       font-weight: 600;
-      color: #334155;
+      color: var(--lp-text-primary);
       margin-bottom: 0.75rem;
     }
 
     p {
       font-size: 1rem;
       line-height: 1.8;
-      color: #64748b;
+      color: var(--lp-text-secondary);
       margin: 0;
     }
   }
