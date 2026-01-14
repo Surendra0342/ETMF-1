@@ -1,0 +1,1195 @@
+// Two-Factor Authentication Styles
+
+// Variables
+$twofa-primary: #6366f1;
+$twofa-primary-hover: #4f46e5;
+$twofa-success: #22c55e;
+$twofa-danger: #ef4444;
+$twofa-dark: #1e1b4b;
+$twofa-gray-100: #f8fafc;
+$twofa-gray-200: #e2e8f0;
+$twofa-gray-300: #cbd5e1;
+$twofa-gray-400: #94a3b8;
+$twofa-gray-500: #64748b;
+$twofa-gray-600: #475569;
+$twofa-gray-700: #334155;
+$twofa-gray-800: #1e293b;
+$twofa-gray-900: #0f172a;
+
+.twofa-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (prefers-color-scheme: dark) {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+}
+
+.twofa-container {
+  max-width: 520px;
+  width: 100%;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  @media (prefers-color-scheme: dark) {
+    background: $twofa-gray-800;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.twofa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid $twofa-gray-200;
+
+  @media (prefers-color-scheme: dark) {
+    border-bottom-color: $twofa-gray-700;
+  }
+
+  .back-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: $twofa-gray-600;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $twofa-gray-100;
+      color: $twofa-gray-800;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+
+      &:hover {
+        background: $twofa-gray-700;
+        color: white;
+      }
+    }
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    svg {
+      color: $twofa-primary;
+      width: 20px;
+      height: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: $twofa-gray-800;
+
+      @media (prefers-color-scheme: dark) {
+        color: white;
+      }
+    }
+  }
+}
+
+.twofa-content {
+  padding: 24px 20px;
+
+  @media (max-width: 576px) {
+    padding: 20px 16px;
+  }
+}
+
+// Intro Step
+.twofa-intro {
+  text-align: center;
+  max-width: 380px;
+  margin: 0 auto;
+
+  .intro-icon {
+    margin-bottom: 12px;
+    
+    svg {
+      width: 40px;
+      height: 40px;
+      color: $twofa-primary;
+      opacity: 0.9;
+    }
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 10px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .intro-description {
+    color: $twofa-gray-600;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.security-benefits {
+  background: $twofa-gray-100;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: left;
+
+  @media (prefers-color-scheme: dark) {
+    background: $twofa-gray-700;
+  }
+
+  h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: $twofa-gray-700;
+    margin-bottom: 10px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-200;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      color: $twofa-gray-600;
+      font-size: 13px;
+
+      svg {
+        color: $twofa-success;
+        flex-shrink: 0;
+        width: 16px;
+        height: 16px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        color: $twofa-gray-300;
+      }
+    }
+  }
+}
+
+.twofa-enable-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $twofa-primary !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 22px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $twofa-primary-hover !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba($twofa-primary, 0.3);
+  }
+}
+
+.twofa-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.twofa-disable-btn {
+  background: $twofa-danger !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 22px !important;
+  border-radius: 10px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}
+
+// Step Indicator
+.step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 20px;
+
+  .step {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    background: $twofa-gray-200;
+    color: $twofa-gray-500;
+    transition: all 0.3s ease;
+
+    &.active {
+      background: $twofa-primary;
+      color: white;
+    }
+
+    &.completed {
+      background: $twofa-success;
+      color: white;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+      color: $twofa-gray-400;
+    }
+  }
+
+  .step-line {
+    width: 40px;
+    height: 2px;
+    background: $twofa-gray-200;
+    border-radius: 2px;
+
+    &.completed {
+      background: $twofa-success;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+    }
+  }
+}
+
+// QR Step
+.twofa-qr-step {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .step-description {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 20px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.qr-code-container {
+  margin-bottom: 16px;
+
+  .qr-code-placeholder {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+    background: white;
+    border: 2px dashed $twofa-gray-300;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    svg {
+      color: $twofa-gray-400;
+      width: 40px;
+      height: 40px;
+    }
+
+    .qr-mock-text {
+      font-size: 11px;
+      color: $twofa-gray-400;
+      margin: 0;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+      border-color: $twofa-gray-600;
+    }
+  }
+}
+
+.manual-entry {
+  margin-bottom: 20px;
+
+  p {
+    color: $twofa-gray-500;
+    font-size: 12px;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.secret-key-display {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: $twofa-gray-100;
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  code {
+    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: $twofa-gray-800;
+    letter-spacing: 1.5px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .copy-btn {
+    background: none;
+    border: none;
+    color: $twofa-primary;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: white;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: $twofa-gray-700;
+
+    .copy-btn:hover {
+      background: $twofa-gray-600;
+    }
+  }
+}
+
+.step-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.twofa-secondary-btn {
+  background: transparent !important;
+  color: $twofa-gray-600 !important;
+  border: 2px solid $twofa-gray-300 !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: $twofa-gray-100 !important;
+    border-color: $twofa-gray-400 !important;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: $twofa-gray-300 !important;
+    border-color: $twofa-gray-600 !important;
+
+    &:hover {
+      background: $twofa-gray-700 !important;
+      border-color: $twofa-gray-500 !important;
+    }
+  }
+}
+
+.twofa-primary-btn {
+  background: $twofa-primary !important;
+  color: white !important;
+  border: none !important;
+  padding: 10px 20px !important;
+  border-radius: 8px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: $twofa-primary-hover !important;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+}
+
+// Verify Step
+.twofa-verify-step {
+  text-align: center;
+  max-width: 360px;
+  margin: 0 auto;
+
+  .verify-icon {
+    margin-bottom: 14px;
+
+    svg {
+      color: $twofa-primary;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .step-description {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 20px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.verification-code-input {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 16px;
+
+  .code-input {
+    width: 40px;
+    height: 48px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    border: 2px solid $twofa-gray-300;
+    border-radius: 10px;
+    background: white;
+    color: $twofa-gray-800;
+    transition: all 0.2s ease;
+    outline: none;
+
+    &:focus {
+      border-color: $twofa-primary;
+      box-shadow: 0 0 0 2px rgba($twofa-primary, 0.1);
+    }
+
+    &.error {
+      border-color: $twofa-danger;
+      animation: shake 0.5s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+      border-color: $twofa-gray-600;
+      color: white;
+
+      &:focus {
+        border-color: $twofa-primary;
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.error-message {
+  color: $twofa-danger;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+// Backup Codes Step
+.twofa-backup-step {
+  text-align: center;
+  max-width: 420px;
+  margin: 0 auto;
+
+  .backup-icon {
+    margin-bottom: 14px;
+
+    svg {
+      color: $twofa-primary;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .step-description {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 16px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.backup-codes-container {
+  background: $twofa-gray-100;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+
+  @media (prefers-color-scheme: dark) {
+    background: $twofa-gray-700;
+  }
+}
+
+.backup-codes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+  }
+
+  .backup-code {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    padding: 8px 10px;
+    border-radius: 6px;
+
+    .code-number {
+      color: $twofa-gray-400;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    code {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      color: $twofa-gray-800;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-800;
+
+      code {
+        color: white;
+      }
+    }
+  }
+}
+
+.backup-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+
+  .backup-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: white;
+    border: none;
+    color: $twofa-gray-700;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $twofa-gray-200;
+    }
+
+    svg {
+      color: $twofa-primary;
+      width: 14px;
+      height: 14px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-800;
+      color: $twofa-gray-300;
+
+      &:hover {
+        background: $twofa-gray-600;
+      }
+    }
+  }
+}
+
+.backup-warning {
+  margin-bottom: 16px;
+
+  p {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin: 0;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+// Success Step
+.twofa-success {
+  text-align: center;
+  max-width: 360px;
+  margin: 0 auto;
+
+  .success-icon {
+    margin-bottom: 16px;
+
+    .success-circle {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, $twofa-success, darken($twofa-success, 10%));
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      animation: scaleIn 0.5s ease;
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .success-description {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 20px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-info {
+  background: $twofa-gray-100;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 20px;
+  text-align: left;
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    color: $twofa-gray-700;
+    font-size: 13px;
+
+    svg {
+      color: $twofa-success;
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: $twofa-gray-700;
+
+    .info-item {
+      color: $twofa-gray-300;
+    }
+  }
+}
+
+// Verification Page Styles
+.twofa-verify-container {
+  max-width: 420px;
+
+  .twofa-verify-header {
+    padding: 16px 20px;
+    text-align: center;
+    border-bottom: 1px solid $twofa-gray-200;
+
+    .verify-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      .logo-icon {
+        font-size: 22px;
+      }
+
+      .logo-text {
+        font-size: 20px;
+        font-weight: 700;
+        color: $twofa-dark;
+
+        @media (prefers-color-scheme: dark) {
+          color: white;
+        }
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      border-bottom-color: $twofa-gray-700;
+    }
+  }
+}
+
+.twofa-verify-main {
+  text-align: center;
+
+  .verify-icon-wrapper {
+    margin-bottom: 14px;
+
+    svg {
+      color: $twofa-primary;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 6px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .verify-subtitle {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 20px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.backup-code-input-wrapper {
+  margin-bottom: 16px;
+
+  .backup-code-field {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 14px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 2px;
+    border: 2px solid $twofa-gray-300;
+    border-radius: 10px;
+    background: white;
+    color: $twofa-gray-800;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: $twofa-primary;
+      box-shadow: 0 0 0 2px rgba($twofa-primary, 0.1);
+    }
+
+    &.error {
+      border-color: $twofa-danger;
+    }
+
+    &::placeholder {
+      color: $twofa-gray-400;
+      font-weight: 500;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+      border-color: $twofa-gray-600;
+      color: white;
+
+      &:focus {
+        border-color: $twofa-primary;
+      }
+    }
+  }
+}
+
+.verify-alternatives {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid $twofa-gray-200;
+
+  .alternative-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: $twofa-primary;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    border-top-color: $twofa-gray-700;
+  }
+}
+
+.verify-footer {
+  margin-top: 16px;
+
+  .back-to-login {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    color: $twofa-gray-500;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: $twofa-gray-700;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+
+      &:hover {
+        color: $twofa-gray-300;
+      }
+    }
+  }
+}
+
+// Download App Step
+.twofa-download-step {
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+
+  .download-icon {
+    margin-bottom: 14px;
+    
+    svg {
+      color: $twofa-primary;
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: $twofa-gray-800;
+    margin-bottom: 8px;
+
+    @media (prefers-color-scheme: dark) {
+      color: white;
+    }
+  }
+
+  .step-description {
+    color: $twofa-gray-600;
+    font-size: 13px;
+    margin-bottom: 16px;
+
+    @media (prefers-color-scheme: dark) {
+      color: $twofa-gray-400;
+    }
+  }
+}
+
+.authenticator-apps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  .app-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: $twofa-gray-100;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: $twofa-gray-200;
+      transform: translateX(2px);
+    }
+
+    .app-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+
+      &.google-auth {
+        background: linear-gradient(135deg, #4285f4, #34a853);
+      }
+
+      &.authy {
+        background: linear-gradient(135deg, #ec1c24, #ff6b6b);
+      }
+
+      &.microsoft {
+        background: linear-gradient(135deg, #00a4ef, #7fba00);
+      }
+    }
+
+    .app-info {
+      flex: 1;
+      text-align: left;
+
+      h4 {
+        margin: 0 0 2px;
+        font-size: 13px;
+        font-weight: 600;
+        color: $twofa-gray-800;
+      }
+
+      p {
+        margin: 0;
+        font-size: 11px;
+        color: $twofa-gray-500;
+      }
+    }
+
+    svg {
+      color: $twofa-gray-400;
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      background: $twofa-gray-700;
+
+      &:hover {
+        background: $twofa-gray-600;
+      }
+
+      .app-info h4 {
+        color: white;
+      }
+
+      .app-info p {
+        color: $twofa-gray-400;
+      }
+    }
+  }
+}
+
+.already-have-app {
+  margin-bottom: 14px;
+
+  p {
+    color: $twofa-gray-500;
+    font-size: 12px;
+    margin: 0;
+  }
+}
+
+// Demo TOTP Section
+.demo-totp-section {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #f59e0b;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin: 14px auto;
+  max-width: 280px;
+
+  &.compact {
+    padding: 10px 14px;
+    margin: 12px auto;
+  }
+
+  .demo-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #92400e;
+    margin: 0 0 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .demo-totp-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    .demo-code {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Mono', 'Courier New', monospace;
+      font-size: 22px;
+      font-weight: 700;
+      color: #b45309;
+      letter-spacing: 3px;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .demo-timer {
+      .timer-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: conic-gradient(#f59e0b var(--progress), rgba(245, 158, 11, 0.2) var(--progress));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 700;
+        color: #92400e;
+      }
+    }
+
+    .demo-timer-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 3px 6px;
+      border-radius: 4px;
+    }
+  }
+}
+
+// Key info text
+.key-info {
+  font-size: 11px;
+  color: $twofa-gray-500;
+  margin-top: 6px;
+
+  @media (prefers-color-scheme: dark) {
+    color: $twofa-gray-400;
+  }
+}

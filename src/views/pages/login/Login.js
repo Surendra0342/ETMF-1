@@ -79,7 +79,8 @@ const Login = () => {
     // Generate and send OTP
     const newOtp = generateOTP()
     setGeneratedOtp(newOtp)
-    console.log('Generated OTP:', newOtp) // In production, this would be sent via SMS/Email
+    // For demo purposes - OTP is displayed on screen
+    // In production, this would be sent via SMS/Email only
 
     // Clear error and move to OTP step
     setError('')
@@ -165,8 +166,22 @@ const Login = () => {
     // Verify OTP (In production, this would be an API call)
     if (enteredOtp === generatedOtp) {
       setOtpError('')
-      // Navigate to dashboard on successful verification
-      navigate('/dashboard')
+      
+      // Set user as authenticated
+      sessionStorage.setItem('isAuthenticated', 'true')
+      
+      // Check if 2FA is enabled for this user
+      const is2FAEnabled = localStorage.getItem('2fa_enabled') === 'true'
+      
+      if (is2FAEnabled) {
+        // Redirect to 2FA verification
+        navigate('/2fa/verify', { state: { email: emailOrMobile } })
+      } else {
+        // Also mark 2FA as verified (not applicable) so ProtectedRoute works
+        sessionStorage.setItem('2fa_verified', 'true')
+        // Navigate to dashboard on successful verification
+        navigate('/dashboard')
+      }
     } else {
       setOtpError('Invalid OTP. Please try again.')
       // Clear OTP inputs
@@ -181,7 +196,7 @@ const Login = () => {
     // Generate new OTP
     const newOtp = generateOTP()
     setGeneratedOtp(newOtp)
-    console.log('Resent OTP:', newOtp) // In production, this would be sent via SMS/Email
+    // For demo purposes - OTP is displayed on screen
 
     // Reset timer and OTP inputs
     setResendTimer(30)
@@ -229,7 +244,7 @@ const Login = () => {
     // Generate OTP for recovery
     const newOtp = generateOTP()
     setGeneratedOtp(newOtp)
-    console.log('Recovery OTP sent to email:', newOtp)
+    // For demo purposes - OTP is displayed on screen
 
     // Move to OTP verification step
     setStep('otp')
@@ -445,6 +460,12 @@ const Login = () => {
                     <br />
                     <strong>{emailOrMobile}</strong>
                   </p>
+
+                  {/* Demo OTP Display */}
+                  <div className="demo-otp-display">
+                    <span className="demo-label">Demo OTP:</span>
+                    <span className="demo-otp-code">{generatedOtp}</span>
+                  </div>
 
                   <button
                     type="button"

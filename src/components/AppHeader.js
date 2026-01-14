@@ -20,6 +20,8 @@ import {
   cilSun,
 } from '@coreui/icons'
 
+import { AppHeaderDropdown } from './header/index'
+
 // Search icon component
 const SearchIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -110,12 +112,8 @@ const AppHeader = () => {
             </CDropdownMenu>
           </CDropdown>
 
-          {/* User Avatar */}
-          <CNavItem>
-            <button className="shadcn-avatar-btn">
-              <span>SN</span>
-            </button>
-          </CNavItem>
+          {/* User Profile Dropdown */}
+          <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>
     </CHeader>

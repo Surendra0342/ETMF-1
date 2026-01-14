@@ -265,14 +265,14 @@ const LandingPage = () => {
                   Start Free Trial
                   <ArrowRight size={20} />
                 </CButton> */}
-                <CButton
+                {/* <CButton
                   size="lg"
                   className="landing-hero-cta landing-cta-secondary"
                   onClick={() => navigate('/contact')}
                 >
                   <Play size={20} />
                   Watch Demo
-                </CButton>
+                </CButton> */}
               </div>
             </div>
 
@@ -525,13 +525,13 @@ const LandingPage = () => {
               >
                 Start Free Trial
               </CButton> */}
-              <CButton
-                size="lg"
-                className="landing-cta-btn landing-cta-btn-secondary"
-                onClick={() => navigate('/contact')}
-              >
-                Schedule Demo
-              </CButton>
+              ` {/* <CButton
+                  size="lg"
+                  className="landing-cta-btn landing-cta-btn-secondary"
+                  onClick={() => navigate('/contact')}
+                >
+                  Schedule Demo
+                </CButton>` */}
             </div>
             <p className="landing-cta-note">No credit card required · 14-day free trial · Cancel anytime</p>
           </div>
