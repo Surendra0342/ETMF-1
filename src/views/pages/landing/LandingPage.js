@@ -28,7 +28,7 @@ import {
 } from 'lucide-react'
 import './LandingPage.scss'
 import SclinNexusLogo from '../../../assets/images/SclinNexus_color_logo.png'
-import SclinTechLogo from '../../../assets/images/sclintech_BB_logo.png'
+import SclinTechLogo from '../../../assets/images/Sclintech_BB_logo.png'
 
 const LandingPage = () => {
   const navigate = useNavigate()
