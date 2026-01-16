@@ -28,6 +28,7 @@ import {
 } from 'lucide-react'
 import './LandingPage.scss'
 import SclinNexusLogo from '../../../assets/images/SclinNexus_color_logo.png'
+import SclinTechLogo from '../../../assets/images/sclintech_BB_logo.png'
 
 const LandingPage = () => {
   const navigate = useNavigate()
@@ -86,7 +87,7 @@ const LandingPage = () => {
       image: 'https://images.pexels.com/photos/3825539/pexels-photo-3825539.jpeg?auto=compress&cs=tinysrgb&w=1920',
       title: 'Transform Your',
       highlight: ' Clinical Trials ',
-      titleEnd: 'with Modern SclinTech Solutions',
+      titleEnd: 'with Modern SclinNexus Solutions',
       subtitle: 'A powerful, intuitive clinical trial management platform that simplifies execution, ensures compliance, and accelerates your path to breakthrough discoveries.',
     },
     {
@@ -179,8 +180,8 @@ const LandingPage = () => {
     },
     {
       icon: <FolderOpen size={28} />,
-      title: 'SclinTech Manager',
-      description: 'Streamline document workflows with advanced SclinTech functionality and inspection readiness.',
+      title: 'SclinNexus Manager',
+      description: 'Streamline document workflows with advanced SclinNexus functionality and inspection readiness.',
       gradient: 'linear-gradient(135deg, #fda4af 0%, #fde68a 100%)',
     },
     {
@@ -442,7 +443,7 @@ const LandingPage = () => {
         <CContainer>
           <div className="landing-section-header">
             <span className="landing-section-badge">Benefits</span>
-            <h2 className="landing-section-title">Why Choose SclinTech?</h2>
+            <h2 className="landing-section-title">Why Choose SclinNexus?</h2>
             <p className="landing-section-subtitle">
               Comprehensive capabilities, flexible deployment, and proven reliability for sponsors, CROs, and research sites.
             </p>
@@ -514,7 +515,7 @@ const LandingPage = () => {
           <div className="landing-cta-content">
             <h2 className="landing-cta-title">Ready to Accelerate Your Clinical Trials?</h2>
             <p className="landing-cta-subtitle">
-              Join hundreds of research organizations already using SclinTech to streamline their 
+              Join hundreds of research organizations already using SclinNexus to streamline their 
               clinical operations and bring treatments to patients faster.
             </p>
             <div className="landing-cta-buttons">
@@ -533,7 +534,7 @@ const LandingPage = () => {
                   Schedule Demo
                 </CButton>` */}
             </div>
-            <p className="landing-cta-note">No credit card required · 14-day free trial · Cancel anytime</p>
+            {/* <p className="landing-cta-note">No credit card required · 14-day free trial · Cancel anytime</p> */}
           </div>
         </CContainer>
       </section>
@@ -555,28 +556,28 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>Introduction</h3>
                 <p>
-                  SclinTech is dedicated to protecting your online privacy. This policy outlines how SclinTech collects, uses, and safeguards your personally identifiable information, such as your name, address, email address, phone number, and other related information that is not publicly available. This web publication is owned and operated by SclinTech. For any inquiries regarding this privacy statement, please contact us via email at support@SclinTech.com.
+                  SclinNexus is dedicated to protecting your online privacy. This policy outlines how SclinNexus collects, uses, and safeguards your personally identifiable information, such as your name, address, email address, phone number, and other related information that is not publicly available. This web publication is owned and operated by SclinNexus. For any inquiries regarding this privacy statement, please contact us via email at support@SclinNexus.com.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Information Collection and Use</h3>
                 <p>
-                  SclinTech collects personal information when you register to receive communications or download information. We may combine this information with data obtained from business partners or other companies. For instance, we may request details when you sign up for a survey or a newsletter. Registration may require information such as your name, email address, birth date, gender, zip code, occupation, industry, and personal interests. For certain products and services, we may also ask for your address, Social Security number, and information about your assets. Once registered and signed in, you are no longer anonymous to us. You always have the option to withhold the information we request.
+                  SclinNexus collects personal information when you register to receive communications or download information. We may combine this information with data obtained from business partners or other companies. For instance, we may request details when you sign up for a survey or a newsletter. Registration may require information such as your name, email address, birth date, gender, zip code, occupation, industry, and personal interests. For certain products and services, we may also ask for your address, Social Security number, and information about your assets. Once registered and signed in, you are no longer anonymous to us. You always have the option to withhold the information we request.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Information Sharing and Disclosure</h3>
                 <p>
-                  Our primary objective in collecting user information is to understand your project or business needs and enhance your experience on our web publications. This includes providing interactive communications such as newsletters to the email address you provide. SclinTech may also disclose user information when required by law, in good faith. Please note that SclinTech may sponsor advertisers or websites with links on our publications. The information practices of these external parties and websites are not covered by this privacy statement.
+                  Our primary objective in collecting user information is to understand your project or business needs and enhance your experience on our web publications. This includes providing interactive communications such as newsletters to the email address you provide. SclinNexus may also disclose user information when required by law, in good faith. Please note that SclinNexus may sponsor advertisers or websites with links on our publications. The information practices of these external parties and websites are not covered by this privacy statement.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Email</h3>
                 <p>
-                  SclinTech respects the privacy of its readers and will not disclose, distribute, or rent its email subscriber newsletter list to any third party, nor will it permit anyone else to do so.
+                  SclinNexus respects the privacy of its readers and will not disclose, distribute, or rent its email subscriber newsletter list to any third party, nor will it permit anyone else to do so.
                 </p>
               </div>
             </div>
@@ -599,42 +600,42 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>Acknowledgment and Agreement to Terms and Conditions</h3>
                 <p>
-                  By accessing and using this website, you unconditionally accept and agree to the following terms and conditions. SclinTech reserves the right to amend the Terms of Use at any time without prior notice. You are required to adhere to any such amendments and are therefore advised to periodically review this page to stay informed of the current Terms and Conditions to which you are subject.
+                  By accessing and using this website, you unconditionally accept and agree to the following terms and conditions. SclinNexus reserves the right to amend the Terms of Use at any time without prior notice. You are required to adhere to any such amendments and are therefore advised to periodically review this page to stay informed of the current Terms and Conditions to which you are subject.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>The Veracity of Information</h3>
                 <p>
-                  The information provided on this website is not warranted to be accurate, current, or complete, and may contain technical inaccuracies or typographical errors. SclinTech disclaims any responsibility for updating the site to ensure the accuracy or completeness of the information posted herein. Therefore, it is incumbent on users to verify the accuracy and completeness of all information prior to making any decisions regarding the services, products, or other matters described on this website.
+                  The information provided on this website is not warranted to be accurate, current, or complete, and may contain technical inaccuracies or typographical errors. SclinNexus disclaims any responsibility for updating the site to ensure the accuracy or completeness of the information posted herein. Therefore, it is incumbent on users to verify the accuracy and completeness of all information prior to making any decisions regarding the services, products, or other matters described on this website.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>No Guarantees or Warranties</h3>
                 <p>
-                  The website and its contents are provided on an "as is" basis. Utilization of the website and its contents is at the user's sole risk. The website and its contents are provided without any representations, endorsements, or warranties of any kind, whether express or implied, including, but not limited to, warranties of title, accuracy, merchantability, fitness for a particular purpose, or non-infringement, except for warranties (if any) that cannot be expressly excluded under applicable law. Furthermore, SclinTech makes no representations, endorsements, or warranties, whether express or implied, with respect to any third-party website.
+                  The website and its contents are provided on an "as is" basis. Utilization of the website and its contents is at the user's sole risk. The website and its contents are provided without any representations, endorsements, or warranties of any kind, whether express or implied, including, but not limited to, warranties of title, accuracy, merchantability, fitness for a particular purpose, or non-infringement, except for warranties (if any) that cannot be expressly excluded under applicable law. Furthermore, SclinNexus makes no representations, endorsements, or warranties, whether express or implied, with respect to any third-party website.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Utilization of Website</h3>
                 <p>
-                  The content provided on this website is intended exclusively for the personal use of its users. Users are prohibited from copying (except for personal use), modifying, distributing, transmitting, displaying, performing, reproducing, transferring, reselling, or republishing any content from the SclinTech website without obtaining prior written consent from SclinTech, which SclinTech may withhold at its sole discretion. SclinTech reserves the right to limit or restrict access to website data, downloads, accounts, and content, and to exclude any user or group of users from the website, as outlined in the website's Terms of Use.
+                  The content provided on this website is intended exclusively for the personal use of its users. Users are prohibited from copying (except for personal use), modifying, distributing, transmitting, displaying, performing, reproducing, transferring, reselling, or republishing any content from the SclinNexus website without obtaining prior written consent from SclinNexus, which SclinNexus may withhold at its sole discretion. SclinNexus reserves the right to limit or restrict access to website data, downloads, accounts, and content, and to exclude any user or group of users from the website, as outlined in the website's Terms of Use.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Copyrights and All Other Related Intellectual Property</h3>
                 <p>
-                  All content contained on this website, including, but not limited to, white papers, case studies, graphics, icons, and the overall design and presentation (the "Website"), is the sole and exclusive property of SclinTech, and protected by applicable intellectual property laws. Trademarks not specifically identified as belonging to SclinTech are the property of their respective owners.
+                  All content contained on this website, including, but not limited to, white papers, case studies, graphics, icons, and the overall design and presentation (the "Website"), is the sole and exclusive property of SclinNexus, and protected by applicable intellectual property laws. Trademarks not specifically identified as belonging to SclinNexus are the property of their respective owners.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Disclaimer of Liability</h3>
                 <p>
-                  SclinTech shall not be liable under any circumstances for any damages whatsoever, of any kind or nature, arising out of or in connection with this website, its use, or any site or resource linked to, referenced, or accessed through this website. This includes, but is not limited to, direct, indirect, incidental, special, exemplary, or consequential damages, lost profits, business interruption, lost savings, or loss of programs or other data, even if SclinTech has been expressly advised of the possibility of such damages. This exclusion and waiver of liability applies to all claims, regardless of whether they are based on contract, warranty, tort, or any other legal theory.
+                  SclinNexus shall not be liable under any circumstances for any damages whatsoever, of any kind or nature, arising out of or in connection with this website, its use, or any site or resource linked to, referenced, or accessed through this website. This includes, but is not limited to, direct, indirect, incidental, special, exemplary, or consequential damages, lost profits, business interruption, lost savings, or loss of programs or other data, even if SclinNexus has been expressly advised of the possibility of such damages. This exclusion and waiver of liability applies to all claims, regardless of whether they are based on contract, warranty, tort, or any other legal theory.
                 </p>
               </div>
             </div>
@@ -678,7 +679,7 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>Third-Party Tools</h3>
                 <p>
-                  We incorporate third-party tools on the SclinTech website for analytical or user experience purposes.
+                  We incorporate third-party tools on the SclinNexus website for analytical or user experience purposes.
                 </p>
               </div>
 
@@ -722,7 +723,7 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>Combining Personal Data</h3>
                 <p>
-                  The personal data we collect, directly or indirectly, may be combined to enhance its overall accuracy and completeness and to better tailor our interactions with you. The personal data you provide to SclinTech may also be used for direct marketing purposes. Before doing so, we will ensure that either we have obtained your specific consent or that it is necessary for the legitimate interest pursued by us in securing the delivery of our products and services.
+                  The personal data we collect, directly or indirectly, may be combined to enhance its overall accuracy and completeness and to better tailor our interactions with you. The personal data you provide to SclinNexus may also be used for direct marketing purposes. Before doing so, we will ensure that either we have obtained your specific consent or that it is necessary for the legitimate interest pursued by us in securing the delivery of our products and services.
                 </p>
               </div>
 
@@ -736,14 +737,14 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>General Data Protection Regulation (GDPR)</h3>
                 <p>
-                  When we process personal data about you, we do so with your consent and/or as necessary to provide the website you use, operate our business, meet our contractual and legal obligations, protect the security of our systems and our customers, or fulfill other legitimate interests of SclinTech as described in this privacy statement.
+                  When we process personal data about you, we do so with your consent and/or as necessary to provide the website you use, operate our business, meet our contractual and legal obligations, protect the security of our systems and our customers, or fulfill other legitimate interests of SclinNexus as described in this privacy statement.
                 </p>
               </div>
 
               <div className="landing-privacy-block">
                 <h3>Your Rights Under GDPR</h3>
                 <p>
-                  SclinTech adheres to applicable data protection laws in the European Economic Area, which include the following rights:<br /><br />
+                  SclinNexus adheres to applicable data protection laws in the European Economic Area, which include the following rights:<br /><br />
                   • If the processing of personal data is based on your consent, you have the right to withdraw consent at any time for future processing.<br />
                   • You have the right to request access to and rectification of your personal data.<br />
                   • You have the right to request the erasure of your personal data, subject to certain exceptions.<br />
@@ -755,7 +756,7 @@ const LandingPage = () => {
               <div className="landing-privacy-block">
                 <h3>Disclosure of User Information</h3>
                 <p>
-                  SclinTech may disclose user information in compliance with legal obligations, in response to lawful requests by public authorities, to pursue our legitimate interests in applying or enforcing our terms and conditions, responding to claims, protecting our rights or the rights of third parties, ensuring the safety of any individual, or preventing illegal activities, including fraud protection and credit risk reduction, in accordance with Art. 6(1)(f) GDPR.
+                  SclinNexus may disclose user information in compliance with legal obligations, in response to lawful requests by public authorities, to pursue our legitimate interests in applying or enforcing our terms and conditions, responding to claims, protecting our rights or the rights of third parties, ensuring the safety of any individual, or preventing illegal activities, including fraud protection and credit risk reduction, in accordance with Art. 6(1)(f) GDPR.
                 </p>
               </div>
             </div>
@@ -831,10 +832,10 @@ const LandingPage = () => {
           </div>
 
           <div className="landing-footer-bottom">
-            <p className="landing-footer-copyright">© 2026 SclinTech. All rights reserved.</p>
+            <p className="landing-footer-copyright">© 2026 SclinNexus. All rights reserved.</p>
             <div className="landing-footer-powered">
               <span>Powered by</span>
-              <span className="landing-powered-logo">SCLINTECH</span>
+              <img src={SclinTechLogo} alt="SclinTech" className="landing-powered-logo" />
             </div>
           </div>
         </CContainer>

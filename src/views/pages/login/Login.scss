@@ -63,7 +63,7 @@
   }
 
   .platform-name {
-    color: #ffffff;
+    color: #0ea5e9 !important;
     font-style: italic;
   }
 }
@@ -71,7 +71,7 @@
 .auth-welcome-description {
   font-size: 1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
   margin-bottom: 2.5rem;
   text-align: justify;
 
@@ -105,7 +105,7 @@
 .auth-trust-text {
   font-size: 0.9375rem;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.75) !important;
   margin: 0;
 
   @media (max-width: 576px) {
@@ -165,6 +165,12 @@
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 2rem;
+
+  .logo-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
 
   .logo-icon {
     font-size: 1.75rem;

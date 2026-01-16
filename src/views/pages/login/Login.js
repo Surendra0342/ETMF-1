@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { CButton, CFormInput, CFormLabel } from '@coreui/react'
 import './Login.scss'
+import SclinNexusLogo from '../../../assets/images/SclinNexus_color_logo.png'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -269,7 +270,7 @@ const Login = () => {
             <h1 className="auth-welcome-title">
               Welcome to
               <br />
-              the <span className="platform-name">ETMF</span> Community
+              the <span className="platform-name">SclinNexus</span> Community
             </h1>
 
             <p className="auth-welcome-description">
@@ -304,8 +305,8 @@ const Login = () => {
             {/* Logo and Title */}
             <div className="auth-form-header">
               <div className="auth-logo">
-                <span className="logo-icon">🔬</span>
-                <span className="logo-text">ETMF</span>
+                <img src={SclinNexusLogo} alt="SclinNexus" className="logo-image" />
+                <span className="logo-text">SclinNexus</span>
               </div>
               <h2 className="auth-form-title">
                 {step === 'input'
@@ -313,7 +314,7 @@ const Login = () => {
                   : step === 'recovery'
                   ? 'Find Your Account'
                   : step === 'email-otp'
-                  ? 'ETMF'
+                  ? 'SclinNexus'
                   : 'Verify OTP'}
               </h2>
             </div>
@@ -418,7 +419,7 @@ const Login = () => {
                     <span className="wifi-icon">📶</span>
                   </div>
 
-                  <h3 className="email-otp-title">ETMF</h3>
+                  <h3 className="email-otp-title">SclinNexus</h3>
 
                   <p className="email-otp-instruction">
                     You will receive an OTP on your registered email
