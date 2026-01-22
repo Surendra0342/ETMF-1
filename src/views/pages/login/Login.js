@@ -324,7 +324,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit} className="auth-form">
                   <div className="form-group">
                     <CFormLabel htmlFor="emailOrMobile" className="form-label">
-                      Email
+                      Email Address
                     </CFormLabel>
                     <CFormInput
                       type="text"
