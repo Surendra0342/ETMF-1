@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { MetricCard, ShadcnTable, DeleteConfirmation } from '../../components'
-import { COffcanvas, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CForm, CFormLabel, CFormInput, CFormSelect, CButton } from '@coreui/react'
+import { MetricCard, ShadcnTable, DeleteConfirmation, Card, CardContent } from '../../components'
+import { CForm, CFormLabel, CFormInput, CFormSelect, CButton, CRow, CCol } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilArrowLeft } from '@coreui/icons'
 import './Studies.scss'
 
 const Studies = () => {
-  const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selectedStudy, setSelectedStudy] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
@@ -70,8 +72,7 @@ const Studies = () => {
     }
   ])
 
-  const handleCreateStudy = () => {
-    setIsEdit(false)
+  const resetForm = () => {
     setFormData({
       studyId: '',
       studyTitle: '',
@@ -82,7 +83,13 @@ const Studies = () => {
       status: '',
       sponsorName: ''
     })
-    setShowOffcanvas(true)
+  }
+
+  const handleCreateStudy = () => {
+    setIsEdit(false)
+    setSelectedStudy(null)
+    resetForm()
+    setShowForm(true)
   }
 
   const handleEdit = (study) => {
@@ -98,7 +105,7 @@ const Studies = () => {
       status: study.status,
       sponsorName: study.sponsorName
     })
-    setShowOffcanvas(true)
+    setShowForm(true)
   }
 
   const handleDelete = (study) => {
@@ -110,6 +117,13 @@ const Studies = () => {
     setStudies(studies.filter(s => s.id !== selectedStudy.id))
     setShowDeleteModal(false)
     setSelectedStudy(null)
+  }
+
+  const handleCancel = () => {
+    setShowForm(false)
+    setIsEdit(false)
+    setSelectedStudy(null)
+    resetForm()
   }
 
   const handleSubmit = (e) => {
@@ -124,7 +138,7 @@ const Studies = () => {
       }
       setStudies([...studies, newStudy])
     }
-    setShowOffcanvas(false)
+    handleCancel()
   }
 
   const columns = [
@@ -167,6 +181,191 @@ const Studies = () => {
     { key: 'sponsorName', label: 'Sponsor Name', sortable: true }
   ]
 
+  // Render Form View
+  if (showForm) {
+    return (
+      <div className="studies-container">
+        <CRow className="mb-4">
+          <CCol xs={12}>
+            <Card>
+              <CardContent>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <CButton
+                    color="light"
+                    onClick={handleCancel}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      border: '1px solid var(--border)',
+                      borderRadius: '6px'
+                    }}
+                  >
+                    <CIcon icon={cilArrowLeft} size="sm" />
+                    Back
+                  </CButton>
+                  <div>
+                    <h4 style={{ margin: 0, fontWeight: 600 }}>
+                      {isEdit ? 'Edit Study' : 'Create New Study'}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>
+                      {isEdit ? 'Update study information' : 'Fill in the details to create a new study'}
+                    </p>
+                  </div>
+                </div>
+
+                <CForm onSubmit={handleSubmit}>
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="studyId">Study ID *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="studyId"
+                          value={formData.studyId}
+                          onChange={(e) => setFormData({ ...formData, studyId: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="studyTitle">Study Title *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="studyTitle"
+                          value={formData.studyTitle}
+                          onChange={(e) => setFormData({ ...formData, studyTitle: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="phase">Phase *</CFormLabel>
+                        <CFormSelect
+                          id="phase"
+                          value={formData.phase}
+                          onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
+                          required
+                        >
+                          <option value="">Select Phase</option>
+                          <option value="Phase I">Phase I</option>
+                          <option value="Phase II">Phase II</option>
+                          <option value="Phase III">Phase III</option>
+                          <option value="Phase IV">Phase IV</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="sponsorName">Sponsor Name *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="sponsorName"
+                          value={formData.sponsorName}
+                          onChange={(e) => setFormData({ ...formData, sponsorName: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="maxSites">Max Sites *</CFormLabel>
+                        <CFormInput
+                          type="number"
+                          id="maxSites"
+                          value={formData.maxSites}
+                          onChange={(e) => setFormData({ ...formData, maxSites: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="maxEnrollments">Max Enrollments *</CFormLabel>
+                        <CFormInput
+                          type="number"
+                          id="maxEnrollments"
+                          value={formData.maxEnrollments}
+                          onChange={(e) => setFormData({ ...formData, maxEnrollments: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="timeline">Timeline *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="timeline"
+                          value={formData.timeline}
+                          onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
+                          placeholder="DD-MMM-YYYY to DD-MMM-YYYY"
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="status">Status *</CFormLabel>
+                        <CFormSelect
+                          id="status"
+                          value={formData.status}
+                          onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                          required
+                        >
+                          <option value="">Select Status</option>
+                          <option value="Design">Design</option>
+                          <option value="Live">Live</option>
+                          <option value="Closed">Closed</option>
+                          <option value="Locked">Locked</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <CButton color="secondary" onClick={handleCancel}>
+                      Cancel
+                    </CButton>
+                    <CButton
+                      type="submit"
+                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                    >
+                      {isEdit ? 'Update Study' : 'Create Study'}
+                    </CButton>
+                  </div>
+                </CForm>
+              </CardContent>
+            </Card>
+          </CCol>
+        </CRow>
+
+        {/* Delete Confirmation Modal */}
+        <DeleteConfirmation
+          visible={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={confirmDelete}
+          itemName={selectedStudy?.studyTitle}
+          title="Delete Study"
+          message="This action cannot be undone. This will permanently delete the study and all associated data."
+        />
+      </div>
+    )
+  }
+
+  // Render Table View
   return (
     <div className="studies-container">
       {/* Header Section */}
@@ -266,133 +465,6 @@ const Studies = () => {
           { label: 'Plan Details', onClick: (row) => console.log('Plan Details', row) }
         ]}
       />
-
-      {/* Create/Edit Study Offcanvas */}
-      <COffcanvas
-        placement="end"
-        visible={showOffcanvas}
-        onHide={() => setShowOffcanvas(false)}
-        className="custom-offcanvas"
-        style={{
-          width: '600px',
-          maxWidth: '100%'
-        }}
-      >
-        <COffcanvasHeader className="custom-offcanvas-header">
-          <COffcanvasTitle>{isEdit ? 'Edit Study' : 'Create New Study'}</COffcanvasTitle>
-        </COffcanvasHeader>
-        <COffcanvasBody className="custom-offcanvas-body">
-          <CForm onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <CFormLabel htmlFor="studyId">Study ID</CFormLabel>
-              <CFormInput
-                type="text"
-                id="studyId"
-                value={formData.studyId}
-                onChange={(e) => setFormData({ ...formData, studyId: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="studyTitle">Study Title</CFormLabel>
-              <CFormInput
-                type="text"
-                id="studyTitle"
-                value={formData.studyTitle}
-                onChange={(e) => setFormData({ ...formData, studyTitle: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="phase">Phase</CFormLabel>
-              <CFormSelect
-                id="phase"
-                value={formData.phase}
-                onChange={(e) => setFormData({ ...formData, phase: e.target.value })}
-                required
-              >
-                <option value="">Select Phase</option>
-                <option value="Phase I">Phase I</option>
-                <option value="Phase II">Phase II</option>
-                <option value="Phase III">Phase III</option>
-                <option value="Phase IV">Phase IV</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="maxSites">Max Sites</CFormLabel>
-              <CFormInput
-                type="number"
-                id="maxSites"
-                value={formData.maxSites}
-                onChange={(e) => setFormData({ ...formData, maxSites: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="maxEnrollments">Max Enrollments</CFormLabel>
-              <CFormInput
-                type="number"
-                id="maxEnrollments"
-                value={formData.maxEnrollments}
-                onChange={(e) => setFormData({ ...formData, maxEnrollments: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="timeline">Timeline</CFormLabel>
-              <CFormInput
-                type="text"
-                id="timeline"
-                value={formData.timeline}
-                onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                placeholder="DD-MMM-YYYY to DD-MMM-YYYY"
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="status">Status</CFormLabel>
-              <CFormSelect
-                id="status"
-                value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                required
-              >
-                <option value="">Select Status</option>
-                <option value="Design">Design</option>
-                <option value="Live">Live</option>
-                <option value="Closed">Closed</option>
-                <option value="Locked">Locked</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="sponsorName">Sponsor Name</CFormLabel>
-              <CFormInput
-                type="text"
-                id="sponsorName"
-                value={formData.sponsorName}
-                onChange={(e) => setFormData({ ...formData, sponsorName: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-              <CButton color="secondary" onClick={() => setShowOffcanvas(false)}>
-                Cancel
-              </CButton>
-              <CButton color="success">
-                {isEdit ? 'Update Study' : 'Create Study'}
-              </CButton>
-            </div>
-          </CForm>
-        </COffcanvasBody>
-      </COffcanvas>
 
       {/* Delete Confirmation Modal */}
       <DeleteConfirmation

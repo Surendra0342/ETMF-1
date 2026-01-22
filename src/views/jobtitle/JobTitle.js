@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { MetricCard, ShadcnTable, DeleteConfirmation } from '../../components'
-import { COffcanvas, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CButton, CForm, CFormInput, CFormLabel, CFormTextarea } from '@coreui/react'
+import { MetricCard, ShadcnTable, DeleteConfirmation, Card, CardContent } from '../../components'
+import { CButton, CForm, CFormInput, CFormLabel, CFormTextarea, CRow, CCol } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilArrowLeft } from '@coreui/icons'
 import './JobTitle.scss'
 
 const JobTitle = () => {
@@ -33,7 +35,7 @@ const JobTitle = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selectedJobTitle, setSelectedJobTitle] = useState(null)
-  const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [markAsInactive, setMarkAsInactive] = useState(false)
   const [formData, setFormData] = useState({
@@ -61,14 +63,19 @@ const JobTitle = () => {
     },
   ]
 
-  const handleCreate = () => {
-    setEditMode(false)
+  const resetForm = () => {
     setFormData({
       jobTitleName: '',
       description: ''
     })
     setMarkAsInactive(false)
-    setShowOffcanvas(true)
+  }
+
+  const handleCreate = () => {
+    setEditMode(false)
+    setSelectedJobTitle(null)
+    resetForm()
+    setShowForm(true)
   }
 
   const handleEdit = (jobTitle) => {
@@ -79,7 +86,7 @@ const JobTitle = () => {
       description: jobTitle.description
     })
     setMarkAsInactive(jobTitle.status === 'Inactive')
-    setShowOffcanvas(true)
+    setShowForm(true)
   }
 
   const handleDelete = (jobTitle) => {
@@ -90,6 +97,14 @@ const JobTitle = () => {
   const confirmDelete = () => {
     setJobTitles(jobTitles.filter((jobTitle) => jobTitle.id !== selectedJobTitle.id))
     setShowDeleteModal(false)
+    setSelectedJobTitle(null)
+  }
+
+  const handleCancel = () => {
+    setShowForm(false)
+    setEditMode(false)
+    setSelectedJobTitle(null)
+    resetForm()
   }
 
   const handleSubmit = () => {
@@ -113,9 +128,123 @@ const JobTitle = () => {
       }
       setJobTitles([...jobTitles, newJobTitle])
     }
-    setShowOffcanvas(false)
+    handleCancel()
   }
 
+  // Render Form View
+  if (showForm) {
+    return (
+      <div className="job-title-container">
+        <CRow className="mb-4">
+          <CCol xs={12}>
+            <Card>
+              <CardContent>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <CButton
+                    color="light"
+                    onClick={handleCancel}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      border: '1px solid var(--border)',
+                      borderRadius: '6px'
+                    }}
+                  >
+                    <CIcon icon={cilArrowLeft} size="sm" />
+                    Back
+                  </CButton>
+                  <div>
+                    <h4 style={{ margin: 0, fontWeight: 600 }}>
+                      {editMode ? 'Edit Job Title' : 'Create New Job Title'}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>
+                      {editMode ? 'Update job title information' : 'Fill in the details to create a new job title'}
+                    </p>
+                  </div>
+                </div>
+
+                <CForm>
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="jobTitleName">Job Title Name *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="jobTitleName"
+                          placeholder="Enter job title name"
+                          value={formData.jobTitleName}
+                          onChange={(e) => setFormData({ ...formData, jobTitleName: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="markAsInactive"
+                            checked={markAsInactive}
+                            onChange={(e) => setMarkAsInactive(e.target.checked)}
+                          />
+                          <label className="form-check-label" htmlFor="markAsInactive">
+                            Mark as Inactive
+                          </label>
+                        </div>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol xs={12}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="description">Description</CFormLabel>
+                        <CFormTextarea
+                          id="description"
+                          rows="4"
+                          placeholder="Enter job title description"
+                          value={formData.description}
+                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        />
+                        <div className="form-text" style={{ textAlign: 'right', fontSize: '0.75rem', color: 'var(--muted-foreground)' }}>
+                          {formData.description.length} / 250 characters
+                        </div>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <CButton color="secondary" onClick={handleCancel}>
+                      Cancel
+                    </CButton>
+                    <CButton
+                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                      onClick={handleSubmit}
+                    >
+                      {editMode ? 'Update Job Title' : 'Create Job Title'}
+                    </CButton>
+                  </div>
+                </CForm>
+              </CardContent>
+            </Card>
+          </CCol>
+        </CRow>
+
+        {/* Delete Confirmation Modal */}
+        <DeleteConfirmation
+          visible={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={confirmDelete}
+          itemName={selectedJobTitle?.jobTitleName}
+        />
+      </div>
+    )
+  }
+
+  // Render Table View
   return (
     <div className="job-title-container">
       {/* Header Section */}
@@ -130,17 +259,17 @@ const JobTitle = () => {
       <div className="job-title-metrics-grid">
         <MetricCard
           title="Total Job Titles"
-          value="04"
+          value={String(jobTitles.length).padStart(2, '0')}
         />
 
         <MetricCard
           title="Active Job Titles"
-          value="02"
+          value={String(jobTitles.filter(jt => jt.status === 'Active').length).padStart(2, '0')}
         />
 
         <MetricCard
           title="Inactive Job Titles"
-          value="02"
+          value={String(jobTitles.filter(jt => jt.status === 'Inactive').length).padStart(2, '0')}
         />
       </div>
 
@@ -181,83 +310,6 @@ const JobTitle = () => {
         onConfirm={confirmDelete}
         itemName={selectedJobTitle?.jobTitleName}
       />
-
-      {/* Create/Edit Job Title Sliding Panel */}
-      <COffcanvas
-        placement="end"
-        visible={showOffcanvas}
-        onHide={() => setShowOffcanvas(false)}
-        backdrop={true}
-        scroll={false}
-        style={{
-          width: '600px',
-          maxWidth: '100%'
-        }}
-      >
-        <COffcanvasHeader>
-          <COffcanvasTitle>{editMode ? 'Edit Job Title' : 'Create a new job title'}</COffcanvasTitle>
-          <CButton
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={() => setShowOffcanvas(false)}
-          />
-        </COffcanvasHeader>
-        <COffcanvasBody>
-          <CForm>
-            <div className="mb-3">
-              <CFormLabel htmlFor="jobTitleName">Job Title Name *</CFormLabel>
-              <CFormInput
-                type="text"
-                id="jobTitleName"
-                placeholder="Enter job title name"
-                value={formData.jobTitleName}
-                onChange={(e) => setFormData({ ...formData, jobTitleName: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="description">Description</CFormLabel>
-              <CFormTextarea
-                id="description"
-                rows="4"
-                placeholder="Enter job title description"
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3 form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="markAsInactive"
-                checked={markAsInactive}
-                onChange={(e) => setMarkAsInactive(e.target.checked)}
-              />
-              <label className="form-check-label" htmlFor="markAsInactive">
-                Mark as Inactive
-              </label>
-            </div>
-
-            <div className="d-flex justify-content-end gap-2 mt-4">
-              <CButton
-                color="secondary"
-                onClick={() => setShowOffcanvas(false)}
-              >
-                Cancel
-              </CButton>
-              <CButton
-                color="success"
-                onClick={handleSubmit}
-              >
-                {editMode ? 'Update Job Title' : 'Create Job Title'}
-              </CButton>
-            </div>
-          </CForm>
-        </COffcanvasBody>
-      </COffcanvas>
     </div>
   )
 }

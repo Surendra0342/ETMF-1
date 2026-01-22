@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { MetricCard, ShadcnTable, DeleteConfirmation } from '../../components'
-import { COffcanvas, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
+import { MetricCard, ShadcnTable, DeleteConfirmation, Card, CardContent } from '../../components'
+import { CButton, CForm, CFormInput, CFormLabel, CFormSelect, CRow, CCol } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilArrowLeft } from '@coreui/icons'
 import './TeamMembers.scss'
 
 const TeamMembers = () => {
@@ -41,7 +43,7 @@ const TeamMembers = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selectedMember, setSelectedMember] = useState(null)
-  const [showOffcanvas, setShowOffcanvas] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -78,8 +80,7 @@ const TeamMembers = () => {
     },
   ]
 
-  const handleCreate = () => {
-    setEditMode(false)
+  const resetForm = () => {
     setFormData({
       fullName: '',
       email: '',
@@ -87,7 +88,13 @@ const TeamMembers = () => {
       role: '',
       markAsInactive: false
     })
-    setShowOffcanvas(true)
+  }
+
+  const handleCreate = () => {
+    setEditMode(false)
+    setSelectedMember(null)
+    resetForm()
+    setShowForm(true)
   }
 
   const handleEdit = (member) => {
@@ -100,7 +107,7 @@ const TeamMembers = () => {
       role: member.role,
       markAsInactive: member.status === 'Inactive'
     })
-    setShowOffcanvas(true)
+    setShowForm(true)
   }
 
   const handleDelete = (member) => {
@@ -111,6 +118,14 @@ const TeamMembers = () => {
   const confirmDelete = () => {
     setTeamMembers(teamMembers.filter((member) => member.id !== selectedMember.id))
     setShowDeleteModal(false)
+    setSelectedMember(null)
+  }
+
+  const handleCancel = () => {
+    setShowForm(false)
+    setEditMode(false)
+    setSelectedMember(null)
+    resetForm()
   }
 
   const handleSubmit = () => {
@@ -138,9 +153,155 @@ const TeamMembers = () => {
       }
       setTeamMembers([...teamMembers, newMember])
     }
-    setShowOffcanvas(false)
+    handleCancel()
   }
 
+  // Render Form View
+  if (showForm) {
+    return (
+      <div className="team-members-container">
+        <CRow className="mb-4">
+          <CCol xs={12}>
+            <Card>
+              <CardContent>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <CButton
+                    color="light"
+                    onClick={handleCancel}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      border: '1px solid var(--border)',
+                      borderRadius: '6px'
+                    }}
+                  >
+                    <CIcon icon={cilArrowLeft} size="sm" />
+                    Back
+                  </CButton>
+                  <div>
+                    <h4 style={{ margin: 0, fontWeight: 600 }}>
+                      {editMode ? 'Edit Team Member' : 'Create New Team Member'}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>
+                      {editMode ? 'Update team member information' : 'Fill in the details to create a new team member'}
+                    </p>
+                  </div>
+                </div>
+
+                <CForm>
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="fullName">Full Name *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="fullName"
+                          placeholder="Enter full name"
+                          value={formData.fullName}
+                          onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="email">Email Address *</CFormLabel>
+                        <CFormInput
+                          type="email"
+                          id="email"
+                          placeholder="Enter email address"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="contactNumber">Contact Number *</CFormLabel>
+                        <CFormInput
+                          type="tel"
+                          id="contactNumber"
+                          placeholder="+911234567890"
+                          value={formData.contactNumber}
+                          onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="role">Role *</CFormLabel>
+                        <CFormSelect
+                          id="role"
+                          value={formData.role}
+                          onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                          required
+                        >
+                          <option value="">Select Role</option>
+                          <option value="CRO Administrator">CRO Administrator</option>
+                          <option value="Principal Investigator">Principal Investigator</option>
+                          <option value="Clinical Research Coordinator">Clinical Research Coordinator</option>
+                          <option value="Data Manager">Data Manager</option>
+                          <option value="Study Coordinator">Study Coordinator</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="markAsInactive"
+                            checked={formData.markAsInactive}
+                            onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
+                          />
+                          <label className="form-check-label" htmlFor="markAsInactive">
+                            Mark as Inactive
+                          </label>
+                        </div>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <CButton color="secondary" onClick={handleCancel}>
+                      Cancel
+                    </CButton>
+                    <CButton
+                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                      onClick={handleSubmit}
+                    >
+                      {editMode ? 'Update Team Member' : 'Create Team Member'}
+                    </CButton>
+                  </div>
+                </CForm>
+              </CardContent>
+            </Card>
+          </CCol>
+        </CRow>
+
+        {/* Delete Confirmation Modal */}
+        <DeleteConfirmation
+          visible={showDeleteModal}
+          onClose={() => setShowDeleteModal(false)}
+          onConfirm={confirmDelete}
+          itemName={selectedMember?.fullName}
+        />
+      </div>
+    )
+  }
+
+  // Render Table View
   return (
     <div className="team-members-container">
       {/* Header Section */}
@@ -206,113 +367,6 @@ const TeamMembers = () => {
         onConfirm={confirmDelete}
         itemName={selectedMember?.fullName}
       />
-
-      {/* Create/Edit Team Member Sliding Panel */}
-      <COffcanvas
-        placement="end"
-        visible={showOffcanvas}
-        onHide={() => setShowOffcanvas(false)}
-        backdrop={true}
-        scroll={false}
-        style={{
-          width: '600px',
-          maxWidth: '100%'
-        }}
-      >
-        <COffcanvasHeader>
-          <COffcanvasTitle>{editMode ? 'Edit Team Member' : 'Create a new team member'}</COffcanvasTitle>
-          <CButton
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={() => setShowOffcanvas(false)}
-          />
-        </COffcanvasHeader>
-        <COffcanvasBody>
-          <CForm>
-            <div className="mb-3">
-              <CFormLabel htmlFor="fullName">Full Name *</CFormLabel>
-              <CFormInput
-                type="text"
-                id="fullName"
-                placeholder="Varada C"
-                value={formData.fullName}
-                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="email">Email Address *</CFormLabel>
-              <CFormInput
-                type="email"
-                id="email"
-                placeholder="varada@sclimtech.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="contactNumber">Contact Number *</CFormLabel>
-              <CFormInput
-                type="tel"
-                id="contactNumber"
-                placeholder="+911234567890"
-                value={formData.contactNumber}
-                onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="role">Role *</CFormLabel>
-              <CFormSelect
-                id="role"
-                value={formData.role}
-                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                required
-              >
-                <option value="">Select Role</option>
-                <option value="CRO Administrator">CRO Administrator</option>
-                <option value="Principal Investigator">Principal Investigator</option>
-                <option value="Clinical Research Coordinator">Clinical Research Coordinator</option>
-                <option value="Data Manager">Data Manager</option>
-                <option value="Study Coordinator">Study Coordinator</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3 form-check form-switch">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                id="markAsInactive"
-                checked={formData.markAsInactive}
-                onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
-              />
-              <label className="form-check-label" htmlFor="markAsInactive">
-                Mark as Inactive
-              </label>
-            </div>
-
-            <div className="d-flex justify-content-end gap-2 mt-4">
-              <CButton
-                color="secondary"
-                onClick={() => setShowOffcanvas(false)}
-              >
-                Cancel
-              </CButton>
-              <CButton
-                color="success"
-                onClick={handleSubmit}
-              >
-                Create User
-              </CButton>
-            </div>
-          </CForm>
-        </COffcanvasBody>
-      </COffcanvas>
     </div>
   )
 }

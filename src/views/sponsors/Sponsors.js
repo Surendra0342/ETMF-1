@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { CCol, CRow, COffcanvas, COffcanvasHeader, COffcanvasTitle, COffcanvasBody, CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
+import { CCol, CRow, CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilBriefcase, cilBook, cilCheckCircle, cilPeople } from '@coreui/icons'
+import { cilBriefcase, cilBook, cilCheckCircle, cilPeople, cilArrowLeft } from '@coreui/icons'
 import { Card, CardContent, ShadcnTable, DeleteConfirmation } from 'src/components'
 
 const Sponsors = () => {
-  const [showModal, setShowModal] = useState(false)
+  const [showForm, setShowForm] = useState(false)
   const [editMode, setEditMode] = useState(false)
   const [editingId, setEditingId] = useState(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
@@ -74,9 +74,7 @@ const Sponsors = () => {
     markAsInactive: false
   })
 
-  const handleCreateNew = () => {
-    setEditMode(false)
-    setEditingId(null)
+  const resetForm = () => {
     setFormData({
       sponsorName: '',
       contactNumber: '',
@@ -93,7 +91,13 @@ const Sponsors = () => {
       country: '',
       markAsInactive: false
     })
-    setShowModal(true)
+  }
+
+  const handleCreateNew = () => {
+    setEditMode(false)
+    setEditingId(null)
+    resetForm()
+    setShowForm(true)
   }
 
   const handleEdit = (row) => {
@@ -115,7 +119,7 @@ const Sponsors = () => {
       country: row.country || '',
       markAsInactive: row.status === 'Inactive'
     })
-    setShowModal(true)
+    setShowForm(true)
   }
 
   const handleDelete = (row) => {
@@ -129,6 +133,13 @@ const Sponsors = () => {
       setShowDeleteModal(false)
       setDeleteTarget(null)
     }
+  }
+
+  const handleCancel = () => {
+    setShowForm(false)
+    setEditMode(false)
+    setEditingId(null)
+    resetForm()
   }
 
   const handleSubmit = () => {
@@ -163,7 +174,7 @@ const Sponsors = () => {
       }
       setSponsors([...sponsors, newSponsor])
     }
-    setShowModal(false)
+    handleCancel()
   }
 
   const columns = [
@@ -174,6 +185,278 @@ const Sponsors = () => {
     { key: 'status', label: 'Status', sortable: true },
   ]
 
+  // Render Form View
+  if (showForm) {
+    return (
+      <>
+        <CRow className="mb-4">
+          <CCol xs={12}>
+            <Card>
+              <CardContent>
+                <div className="d-flex align-items-center gap-3 mb-4">
+                  <CButton
+                    color="light"
+                    onClick={handleCancel}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      padding: '0.5rem 1rem',
+                      border: '1px solid var(--border)',
+                      borderRadius: '6px'
+                    }}
+                  >
+                    <CIcon icon={cilArrowLeft} size="sm" />
+                    Back
+                  </CButton>
+                  <div>
+                    <h4 style={{ margin: 0, fontWeight: 600 }}>
+                      {editMode ? 'Edit Sponsor' : 'Create New Sponsor'}
+                    </h4>
+                    <p style={{ margin: 0, fontSize: '0.875rem', color: 'var(--muted-foreground)' }}>
+                      {editMode ? 'Update sponsor information' : 'Fill in the details to create a new sponsor'}
+                    </p>
+                  </div>
+                </div>
+
+                <CForm>
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="sponsorName">Sponsor Name *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="sponsorName"
+                          value={formData.sponsorName}
+                          onChange={(e) => setFormData({ ...formData, sponsorName: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="contactNumber">Contact Number *</CFormLabel>
+                        <CFormInput
+                          type="tel"
+                          id="contactNumber"
+                          value={formData.contactNumber}
+                          onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="email">Email Address *</CFormLabel>
+                        <CFormInput
+                          type="email"
+                          id="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="organizationName">Organization Name *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="organizationName"
+                          value={formData.organizationName}
+                          onChange={(e) => setFormData({ ...formData, organizationName: e.target.value })}
+                          required
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="registrationNumber">Registration Number *</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="registrationNumber"
+                          value={formData.registrationNumber}
+                          onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="websiteAddress">Website Address</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="websiteAddress"
+                          value={formData.websiteAddress}
+                          onChange={(e) => setFormData({ ...formData, websiteAddress: e.target.value })}
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="addressLine1">Address Line 1</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="addressLine1"
+                          value={formData.addressLine1}
+                          onChange={(e) => setFormData({ ...formData, addressLine1: e.target.value })}
+                        />
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="addressLine2">Address Line 2</CFormLabel>
+                        <CFormInput
+                          type="text"
+                          id="addressLine2"
+                          value={formData.addressLine2}
+                          onChange={(e) => setFormData({ ...formData, addressLine2: e.target.value })}
+                        />
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="city">City *</CFormLabel>
+                        <CFormSelect
+                          id="city"
+                          value={formData.city}
+                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                        >
+                          <option value="">Select city</option>
+                          <option value="new-york">New York</option>
+                          <option value="los-angeles">Los Angeles</option>
+                          <option value="chicago">Chicago</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="postalCode">Postal Code</CFormLabel>
+                        <CFormSelect
+                          id="postalCode"
+                          value={formData.postalCode}
+                          onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                        >
+                          <option value="">Select postal code</option>
+                          <option value="10001">10001</option>
+                          <option value="90001">90001</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="district">District *</CFormLabel>
+                        <CFormSelect
+                          id="district"
+                          value={formData.district}
+                          onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                        >
+                          <option value="">Select district</option>
+                          <option value="manhattan">Manhattan</option>
+                          <option value="brooklyn">Brooklyn</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="country">Country</CFormLabel>
+                        <CFormSelect
+                          id="country"
+                          value={formData.country}
+                          onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                        >
+                          <option value="">Select country</option>
+                          <option value="india">India</option>
+                          <option value="usa">United States</option>
+                          <option value="uk">United Kingdom</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <CRow>
+                    <CCol md={6}>
+                      <div className="mb-3">
+                        <CFormLabel htmlFor="stateProvince">State/Province/Region</CFormLabel>
+                        <CFormSelect
+                          id="stateProvince"
+                          value={formData.stateProvince}
+                          onChange={(e) => setFormData({ ...formData, stateProvince: e.target.value })}
+                        >
+                          <option value="">Select state/province</option>
+                          <option value="ny">New York</option>
+                          <option value="ca">California</option>
+                        </CFormSelect>
+                      </div>
+                    </CCol>
+                    <CCol md={6}>
+                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
+                        <div className="form-check form-switch">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="markAsInactive"
+                            checked={formData.markAsInactive}
+                            onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
+                          />
+                          <label className="form-check-label" htmlFor="markAsInactive">
+                            Mark as Inactive
+                          </label>
+                        </div>
+                      </div>
+                    </CCol>
+                  </CRow>
+
+                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <CButton color="secondary" onClick={handleCancel}>
+                      Cancel
+                    </CButton>
+                    <CButton
+                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                      onClick={handleSubmit}
+                    >
+                      {editMode ? 'Update Sponsor' : 'Create Sponsor'}
+                    </CButton>
+                  </div>
+                </CForm>
+              </CardContent>
+            </Card>
+          </CCol>
+        </CRow>
+
+        {/* Delete Confirmation Dialog */}
+        <DeleteConfirmation
+          visible={showDeleteModal}
+          onClose={() => {
+            setShowDeleteModal(false)
+            setDeleteTarget(null)
+          }}
+          onConfirm={confirmDelete}
+          itemName={deleteTarget?.sponsorName}
+          title="Delete Sponsor"
+          message="This action cannot be undone. This will permanently delete the sponsor and remove all associated data."
+          confirmText="delete"
+          warningText="Please type delete to confirm."
+        />
+      </>
+    )
+  }
+
+  // Render Table View
   return (
     <>
       <CRow className="mb-4">
@@ -301,210 +584,6 @@ const Sponsors = () => {
           />
         </CCol>
       </CRow>
-
-      {/* Create/Edit Sponsor Sliding Panel */}
-      <COffcanvas
-        placement="end"
-        visible={showModal}
-        onHide={() => setShowModal(false)}
-        backdrop={true}
-        scroll={false}
-        style={{
-          width: '600px',
-          maxWidth: '100%'
-        }}
-      >
-        <COffcanvasHeader>
-          <COffcanvasTitle>{editMode ? 'Edit Sponsor' : 'Create a new sponsor'}</COffcanvasTitle>
-          <CButton
-            type="button"
-            className="btn-close"
-            aria-label="Close"
-            onClick={() => setShowModal(false)}
-          />
-        </COffcanvasHeader>
-        <COffcanvasBody>
-          <CForm>
-            <div className="mb-3">
-              <CFormLabel htmlFor="sponsorName">Sponsor Name *</CFormLabel>
-              <CFormInput
-                type="text"
-                id="sponsorName"
-                value={formData.sponsorName}
-                onChange={(e) => setFormData({ ...formData, sponsorName: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="contactNumber">Contact Number *</CFormLabel>
-              <CFormInput
-                type="tel"
-                id="contactNumber"
-                value={formData.contactNumber}
-                onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="email">Email Address *</CFormLabel>
-              <CFormInput
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="organizationName">Organization Name *</CFormLabel>
-              <CFormInput
-                type="text"
-                id="organizationName"
-                value={formData.organizationName}
-                onChange={(e) => setFormData({ ...formData, organizationName: e.target.value })}
-                required
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="registrationNumber">Registration Number *</CFormLabel>
-              <CFormInput
-                type="text"
-                id="registrationNumber"
-                value={formData.registrationNumber}
-                onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="websiteAddress">Website Address</CFormLabel>
-              <CFormInput
-                type="text"
-                id="websiteAddress"
-                value={formData.websiteAddress}
-                onChange={(e) => setFormData({ ...formData, websiteAddress: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="addressLine1">Address Line 1</CFormLabel>
-              <CFormInput
-                type="text"
-                id="addressLine1"
-                value={formData.addressLine1}
-                onChange={(e) => setFormData({ ...formData, addressLine1: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="addressLine2">Address Line 2</CFormLabel>
-              <CFormInput
-                type="text"
-                id="addressLine2"
-                value={formData.addressLine2}
-                onChange={(e) => setFormData({ ...formData, addressLine2: e.target.value })}
-              />
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="city">City *</CFormLabel>
-              <CFormSelect
-                id="city"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              >
-                <option value="">auto-complete dropdown</option>
-                <option value="new-york">New York</option>
-                <option value="los-angeles">Los Angeles</option>
-                <option value="chicago">Chicago</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="postalCode">Postal Code</CFormLabel>
-              <CFormSelect
-                id="postalCode"
-                value={formData.postalCode}
-                onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-              >
-                <option value="">auto-complete dropdown</option>
-                <option value="10001">10001</option>
-                <option value="90001">90001</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="district">District *</CFormLabel>
-              <CFormSelect
-                id="district"
-                value={formData.district}
-                onChange={(e) => setFormData({ ...formData, district: e.target.value })}
-              >
-                <option value="">auto-complete dropdown</option>
-                <option value="manhattan">Manhattan</option>
-                <option value="brooklyn">Brooklyn</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="country">Country</CFormLabel>
-              <CFormSelect
-                id="country"
-                value={formData.country}
-                onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-              >
-                <option value="">auto-complete dropdown</option>
-                <option value="india">India</option>
-                <option value="usa">United States</option>
-                <option value="uk">United Kingdom</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <CFormLabel htmlFor="stateProvince">State/Province/Region</CFormLabel>
-              <CFormSelect
-                id="stateProvince"
-                value={formData.stateProvince}
-                onChange={(e) => setFormData({ ...formData, stateProvince: e.target.value })}
-              >
-                <option value="">auto-complete dropdown</option>
-                <option value="ny">New York</option>
-                <option value="ca">California</option>
-              </CFormSelect>
-            </div>
-
-            <div className="mb-3">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="markAsInactive"
-                  checked={formData.markAsInactive}
-                  onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
-                />
-                <label className="form-check-label" htmlFor="markAsInactive">
-                  Mark as Inactive
-                </label>
-              </div>
-            </div>
-
-            <div className="d-flex gap-2 justify-content-end mt-4">
-              <CButton color="secondary" onClick={() => setShowModal(false)}>
-                Cancel
-              </CButton>
-              <CButton
-                style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
-                onClick={handleSubmit}
-              >
-                {editMode ? 'Update Sponsor' : 'Create Sponsor'}
-              </CButton>
-            </div>
-          </CForm>
-        </COffcanvasBody>
-      </COffcanvas>
 
       {/* Delete Confirmation Dialog */}
       <DeleteConfirmation
