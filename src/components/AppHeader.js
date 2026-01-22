@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import {
   CContainer,
   CDropdown,
@@ -18,9 +19,8 @@ import {
   cilMenu,
   cilMoon,
   cilSun,
+  cilAccountLogout,
 } from '@coreui/icons'
-
-import { AppHeaderDropdown } from './header/index'
 
 // Search icon component
 const SearchIcon = () => (
@@ -32,10 +32,19 @@ const SearchIcon = () => (
 
 const AppHeader = () => {
   const headerRef = useRef()
+  const navigate = useNavigate()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const handleLogout = () => {
+    // Clear all authentication data
+    sessionStorage.removeItem('isAuthenticated')
+    sessionStorage.removeItem('2fa_verified')
+    // Redirect to login
+    navigate('/login')
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -112,8 +121,14 @@ const AppHeader = () => {
             </CDropdownMenu>
           </CDropdown>
 
-          {/* User Profile Dropdown */}
-          <AppHeaderDropdown />
+          {/* Logout Button */}
+          <button
+            className="shadcn-icon-btn"
+            onClick={handleLogout}
+            title="Logout"
+          >
+            <CIcon icon={cilAccountLogout} size="lg" />
+          </button>
         </CHeaderNav>
       </CContainer>
     </CHeader>

@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CButton, CFormInput, CFormLabel, CFormTextarea, CFormSelect } from '@coreui/react'
+import { Linkedin, Twitter } from 'lucide-react'
 import './ContactUs.scss'
+import SclinTechLogo from '../../../assets/images/Sclintech_BB_logo.png'
+import Logo1 from '../../../assets/images/1.svg'
+import Logo2 from '../../../assets/images/2.svg'
 
 const ContactUs = () => {
   const navigate = useNavigate()
+  const [isScrolled, setIsScrolled] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
     workEmail: '',
@@ -60,6 +65,14 @@ const ContactUs = () => {
     return Object.keys(newErrors).length === 0
   }
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
 
@@ -89,26 +102,25 @@ const ContactUs = () => {
   return (
     <div className="contact-page">
       {/* Header */}
-      <header className="contact-header">
+      <header className={`contact-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="contact-header-content">
           <div className="contact-logo" onClick={() => navigate('/')}>
-            <span className="logo-icon">🔬</span>
-            <span className="logo-text">ETMF</span>
+            <img src={Logo1} alt="SclinNexus" className="contact-logo-img" />
+            <span className="contact-logo-text">SclinNexus</span>
           </div>
           <div className="contact-header-buttons">
             <CButton
-              color="success"
+              color="link"
               className="contact-btn-signin"
               onClick={() => navigate('/login')}
             >
               Sign In
             </CButton>
             <CButton
-              color="success"
-              className="contact-btn-contact"
+              className="contact-btn-getstarted"
               onClick={() => navigate('/contact')}
             >
-              Contact Us
+              Get Started
             </CButton>
           </div>
         </div>
@@ -290,52 +302,75 @@ const ContactUs = () => {
       {/* Footer */}
       <footer className="contact-footer">
         <div className="contact-footer-content">
-          <div className="footer-left">
-            <div className="footer-logo">
-              <span className="logo-icon">🔬</span>
-              <span className="logo-text">ETMF</span>
+          <div className="footer-grid">
+            {/* Company Info */}
+            <div className="footer-brand">
+              <div className="footer-logo">
+                <img src={Logo2} alt="SclinNexus" className="footer-logo-img" />
+                <span className="footer-logo-text">SclinNexus</span>
+              </div>
+              <p className="footer-tagline">
+                Empowering clinical research with innovative technology solutions for faster, safer drug development.
+              </p>
+              <div className="footer-social-links">
+                <a href="#" className="footer-social-link" aria-label="LinkedIn">
+                  <Linkedin size={20} />
+                </a>
+                <a href="#" className="footer-social-link" aria-label="Twitter">
+                  <Twitter size={20} />
+                </a>
+              </div>
             </div>
-            <p className="footer-tagline">Precision. Compliance. Insight.</p>
-            <p className="footer-copyright">© 2025 ETMF. All rights reserved.</p>
+
+            {/* Platform Links */}
+            <div className="footer-column">
+              <h4 className="footer-heading">Platform</h4>
+              <ul className="footer-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#integrations">Integrations</a></li>
+              </ul>
+            </div>
+
+            {/* Solutions Links */}
+            <div className="footer-column">
+              <h4 className="footer-heading">Solutions</h4>
+              <ul className="footer-links">
+                <li><a href="#sponsors">For Sponsors</a></li>
+                <li><a href="#cros">For CROs</a></li>
+                <li><a href="#sites">For Sites</a></li>
+                <li><a href="#biotech">For Biotech</a></li>
+              </ul>
+            </div>
+
+            {/* Resources Links */}
+            <div className="footer-column">
+              <h4 className="footer-heading">Resources</h4>
+              <ul className="footer-links">
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="#webinars">Webinars</a></li>
+                <li><a href="#support">Support</a></li>
+              </ul>
+            </div>
+
+            {/* Legal Links */}
+            <div className="footer-column">
+              <h4 className="footer-heading">Legal</h4>
+              <ul className="footer-links">
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#cookies">Cookie Policy</a></li>
+              </ul>
+            </div>
           </div>
 
-          <div className="footer-links">
-            <div className="footer-column">
-              <h4>Company</h4>
-              <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#technology">Technology and Solutions</a></li>
-                <li><a href="#services">Services and Industries</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-column">
-              <h4>Platform Features</h4>
-              <ul>
-                <li><a href="#ecoa">Sponsor eCOA</a></li>
-                <li><a href="#edc">EDC System</a></li>
-                <li><a href="#iwrs">IWRS Platform</a></li>
-                <li><a href="#vault">Nexus-Vault</a></li>
-                <li><a href="#etmf">eTMF Manager</a></li>
-                <li><a href="#coding">Medical Coding</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-column">
-              <h4>Legal</h4>
-              <ul>
-                <li><a href="#privacy">Privacy Policy</a></li>
-                <li><a href="#terms">Terms & Conditions</a></li>
-                <li><a href="#cookie">Cookie Policy</a></li>
-                <li><a href="#contact">Contact Us</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-column">
-              <h4>Powered by</h4>
-              <div className="footer-powered">
-                <span className="powered-logo">SCLINTECH</span>
-              </div>
+          <div className="footer-bottom">
+            <p className="footer-copyright">© 2026 SclinNexus. All rights reserved.</p>
+            <div className="footer-powered">
+              <span>Powered by</span>
+              <img src={SclinTechLogo} alt="SclinTech" className="powered-logo" />
             </div>
           </div>
         </div>

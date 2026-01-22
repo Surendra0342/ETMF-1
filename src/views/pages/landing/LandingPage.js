@@ -27,8 +27,9 @@ import {
   ChevronRight,
 } from 'lucide-react'
 import './LandingPage.scss'
-import SclinNexusLogo from '../../../assets/images/SclinNexus_color_logo.png'
 import SclinTechLogo from '../../../assets/images/Sclintech_BB_logo.png'
+import Logo1 from '../../../assets/images/1.svg'
+import Logo2 from '../../../assets/images/2.svg'
 
 const LandingPage = () => {
   const navigate = useNavigate()
@@ -84,7 +85,7 @@ const LandingPage = () => {
 
   const heroSlides = [
     {
-      image: 'https://images.pexels.com/photos/3825539/pexels-photo-3825539.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      image: 'https://images.pexels.com/photos/7579831/pexels-photo-7579831.jpeg?auto=compress&cs=tinysrgb&w=1920',
       title: 'Transform Your',
       highlight: ' Clinical Trials ',
       titleEnd: 'with Modern SclinNexus Solutions',
@@ -98,7 +99,7 @@ const LandingPage = () => {
       subtitle: 'Leverage real-time insights and predictive analytics to optimize your clinical trials and accelerate drug development timelines.',
     },
     {
-      image: 'https://images.pexels.com/photos/4226219/pexels-photo-4226219.jpeg?auto=compress&cs=tinysrgb&w=1920',
+      image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=1920',
       title: 'Ensure Complete',
       highlight: ' Regulatory Compliance ',
       titleEnd: 'with Built-in Standards',
@@ -209,7 +210,8 @@ const LandingPage = () => {
       <header className={`landing-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="landing-header-content">
           <div className="landing-logo">
-            <img src={SclinNexusLogo} alt="SclinNexus" className="landing-logo-img" />
+            <img src={isScrolled ? Logo1 : Logo2} alt="SclinNexus" className="landing-logo-img" />
+            <span className="landing-logo-text">SclinNexus</span>
           </div>
 
           <div className="landing-header-buttons">
@@ -222,7 +224,7 @@ const LandingPage = () => {
             </CButton>
             <CButton
               className="landing-btn-signup"
-              onClick={() => navigate('/register')}
+              onClick={() => navigate('/contact')}
             >
               Get Started
             </CButton>
@@ -526,13 +528,13 @@ const LandingPage = () => {
               >
                 Start Free Trial
               </CButton> */}
-              ` {/* <CButton
+              ` <CButton
                   size="lg"
                   className="landing-cta-btn landing-cta-btn-secondary"
                   onClick={() => navigate('/contact')}
                 >
-                  Schedule Demo
-                </CButton>` */}
+                  Contact Us Today
+                </CButton>`
             </div>
             {/* <p className="landing-cta-note">No credit card required · 14-day free trial · Cancel anytime</p> */}
           </div>
@@ -771,7 +773,8 @@ const LandingPage = () => {
             {/* Company Info */}
             <div className="landing-footer-brand">
               <div className="landing-footer-logo">
-                <img src={SclinNexusLogo} alt="SclinNexus" className="landing-footer-logo-img" />
+                <img src={Logo2} alt="SclinNexus" className="landing-footer-logo-img" />
+                <span className="landing-footer-logo-text">SclinNexus</span>
               </div>
               <p className="landing-footer-tagline">
                 Empowering clinical research with innovative technology solutions for faster, safer drug development.
@@ -825,7 +828,7 @@ const LandingPage = () => {
               <ul className="landing-footer-links">
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setActivePage('privacy'); window.scrollTo(0, 0); }}>Privacy Policy</a></li>
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setActivePage('terms'); window.scrollTo(0, 0); }}>Terms of Service</a></li>
-                <li><a href="#compliance">Compliance</a></li>
+                {/* <li><a href="#compliance">Compliance</a></li> */}
                 <li><a href="#" onClick={(e) => { e.preventDefault(); setActivePage('cookies'); window.scrollTo(0, 0); }}>Cookie Policy</a></li>
               </ul>
             </div>

@@ -36,11 +36,20 @@
     background-color: transparent;
     border: none;
     border-radius: 6px;
-    cursor: default;
+    cursor: pointer;
     text-align: left;
+    transition: background-color 0.15s ease;
 
     &:hover {
       background-color: var(--muted);
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &::after {
+      display: none !important; // Remove default caret
     }
   }
 

@@ -40,6 +40,9 @@ const JobTitle = React.lazy(() => import('./views/jobtitle/JobTitle'))
 const FormBuilder = React.lazy(() => import('./views/forms/FormBuilder/FormBuilder'))
 const VisualFormBuilder = React.lazy(() => import('./views/forms/FormBuilder/VisualFormBuilder'))
 
+// Settings
+const Authentication = React.lazy(() => import('./views/settings/Authentication'))
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -85,6 +88,9 @@ const routes = [
   // Form Builder Routes
   // { path: '/forms/builder', name: 'Form Builder', element: FormBuilder },
   { path: '/forms/visual-builder', name: 'Visual Form Builder', element: VisualFormBuilder },
+
+  // Settings Routes
+  { path: '/settings/authentication', name: 'Authentication Settings', element: Authentication },
 ]
 
 export default routes

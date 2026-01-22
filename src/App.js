@@ -7,6 +7,7 @@ import './scss/style.scss'
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -54,31 +55,33 @@ const App = () => {
   }, [colorMode])
 
   return (
-    <HashRouter>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          <Route exact path="/" name="Landing Page" element={<LandingPage />} />
-          <Route exact path="/login" name="Login Page" element={<Login />} />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
-          <Route exact path="/contact" name="Contact Us" element={<ContactUs />} />
-          <Route exact path="/2fa/setup" name="2FA Setup" element={<TwoFactorSetup />} />
-          <Route exact path="/2fa/verify" name="2FA Verify" element={<TwoFactorVerify />} />
-          <Route exact path="/404" name="Page 404" element={<Page404 />} />
-          <Route exact path="/500" name="Page 500" element={<Page500 />} />
-          <Route path="/*" name="Home" element={
-            <ProtectedRoute>
-              <DefaultLayout />
-            </ProtectedRoute>
-          } />
-        </Routes>
-      </Suspense>
-    </HashRouter>
+    <ThemeProvider>
+      <HashRouter>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route exact path="/" name="Landing Page" element={<LandingPage />} />
+            <Route exact path="/login" name="Login Page" element={<Login />} />
+            <Route exact path="/register" name="Register Page" element={<Register />} />
+            <Route exact path="/contact" name="Contact Us" element={<ContactUs />} />
+            <Route exact path="/2fa/setup" name="2FA Setup" element={<TwoFactorSetup />} />
+            <Route exact path="/2fa/verify" name="2FA Verify" element={<TwoFactorVerify />} />
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route path="/*" name="Home" element={
+              <ProtectedRoute>
+                <DefaultLayout />
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </Suspense>
+      </HashRouter>
+    </ThemeProvider>
   )
 }
 

@@ -187,11 +187,18 @@
   font-size: 1.875rem;
   font-weight: 700;
   color: #1f2937;
-  margin: 0;
+  margin: 0 0 0.5rem 0;
 
   @media (max-width: 576px) {
     font-size: 1.5rem;
   }
+}
+
+.auth-form-subtitle {
+  font-size: 0.9375rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
 }
 
 .auth-form {
@@ -236,6 +243,56 @@
     font-size: 0.875rem;
     color: #dc2626;
     line-height: 1.4;
+  }
+
+  .password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .form-input {
+      padding-right: 3rem;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.25rem;
+      color: #6b7280;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #374151;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .auth-links {
+    text-align: right;
+    margin-bottom: 1rem;
+
+    a {
+      font-size: 0.875rem;
+      color: #16a34a;
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover {
+        color: #15803d;
+        text-decoration: underline;
+      }
+    }
   }
 }
 
@@ -361,6 +418,14 @@
 // OTP Verification Styles
 .otp-verification {
   margin-top: 1rem;
+
+  .passcode-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
 
   .otp-instruction {
     font-size: 1rem;
@@ -519,6 +584,43 @@
       font-size: 0.9375rem;
       color: #6b7280;
       font-weight: 500;
+    }
+  }
+
+  .otp-resend-info {
+    text-align: center;
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .resend-info-text {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    .resend-link {
+      background: none;
+      border: none;
+      color: #16a34a;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 0;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #15803d;
+        text-decoration: underline;
+      }
+    }
+
+    .resend-timer-link {
+      font-size: 0.9375rem;
+      color: #16a34a;
+      font-weight: 600;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
     }
   }
 }

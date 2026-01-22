@@ -1,3 +1,6 @@
+// Google Fonts - Roboto
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
 // CoreUI Base (keep for compatibility)
 @use "@coreui/coreui/scss/coreui" as * with (
   $enable-deprecation-messages: false,
@@ -10,6 +13,9 @@
 @use './shadcn-globals';
 @use './shadcn-sidebar';
 @use './shadcn-header';
+
+// Global Theme System
+@use './theme';
 
 // Override CoreUI with Shadcn styles
 body {
@@ -158,8 +164,15 @@ body {
   }
 }
 
-// Container spacing
-.container-fluid {
+// Container spacing and full width override
+.container-fluid,
+.container,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+  max-width: 100% !important;
   padding-right: var(--container-padding);
   padding-left: var(--container-padding);
 }

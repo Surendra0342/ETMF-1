@@ -111,6 +111,11 @@ const _nav = [
     items: [
       {
         component: CNavItem,
+        name: 'Authentication',
+        to: '/settings/authentication',
+      },
+      {
+        component: CNavItem,
         name: 'Email Templates',
         to: '/settings/email-templates',
       },

@@ -7,22 +7,23 @@ import SclinNexusLogo from '../../../assets/images/SclinNexus_color_logo.png'
 const Login = () => {
   const navigate = useNavigate()
   const [emailOrMobile, setEmailOrMobile] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
-  const [step, setStep] = useState('input') // 'input', 'otp', 'recovery', or 'email-otp'
+  const [step, setStep] = useState('input') // 'input', 'passcode'
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [otpError, setOtpError] = useState('')
   const [generatedOtp, setGeneratedOtp] = useState('')
   const [resendTimer, setResendTimer] = useState(30)
   const [canResend, setCanResend] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const otpRefs = useRef([])
 
-  // Recovery step states
-  const [recoveryEmail, setRecoveryEmail] = useState('')
-  const [recoveryError, setRecoveryError] = useState('')
+  // Store user info temporarily for 2FA flow
+  const [userInfo, setUserInfo] = useState(null)
 
-  // Timer for OTP resend
+  // Timer for Passcode resend
   useEffect(() => {
-    if (step === 'otp' && resendTimer > 0) {
+    if (step === 'passcode' && resendTimer > 0) {
       const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000)
       return () => clearTimeout(timer)
     } else if (resendTimer === 0) {
@@ -63,12 +64,23 @@ const Login = () => {
       return
     }
 
-    // Check if account exists (mock validation)
-    // In real app, this would be an API call
-    const mockValidEmails = ['robert@domain.com', 'user@example.com']
-    const mockValidMobiles = ['9661096610', '1234567890']
+    if (!password) {
+      setError('Please enter your password.')
+      return
+    }
 
-    if (!mockValidEmails.includes(emailOrMobile) && !mockValidMobiles.includes(emailOrMobile)) {
+    // Check if account exists and validate password (mock validation)
+    // In real app, this would be an API call
+    const mockUsers = {
+      'robert@domain.com': { password: 'password123' },
+      'user@example.com': { password: 'password123' },
+      '9661096610': { password: 'password123' },
+      '1234567890': { password: 'password123' }
+    }
+
+    const user = mockUsers[emailOrMobile]
+
+    if (!user) {
       if (emailOrMobile.includes('@')) {
         setError('Sorry, we cannot find an account with this email address.')
       } else {
@@ -77,28 +89,68 @@ const Login = () => {
       return
     }
 
-    // Generate and send OTP
-    const newOtp = generateOTP()
-    setGeneratedOtp(newOtp)
-    // For demo purposes - OTP is displayed on screen
-    // In production, this would be sent via SMS/Email only
+    // Validate password
+    if (user.password !== password) {
+      setError('Incorrect password. Please try again.')
+      return
+    }
 
-    // Clear error and move to OTP step
+    // Clear error
     setError('')
-    setStep('otp')
-    setResendTimer(30)
-    setCanResend(false)
 
-    // Focus first OTP input
-    setTimeout(() => {
-      if (otpRefs.current[0]) {
-        otpRefs.current[0].focus()
-      }
-    }, 100)
+    // Check 2FA status from localStorage (set in Authentication settings page)
+    const is2FASMSEnabled = localStorage.getItem('2fa_sms_enabled') === 'true'
+    const is2FATOTPEnabled = localStorage.getItem('2fa_totp_enabled') === 'true'
+    const is2FAEnabled = is2FASMSEnabled || is2FATOTPEnabled
+
+    console.log('2FA Status Check:', {
+      is2FASMSEnabled,
+      is2FATOTPEnabled,
+      is2FAEnabled,
+      sms_value: localStorage.getItem('2fa_sms_enabled'),
+      totp_value: localStorage.getItem('2fa_totp_enabled')
+    })
+
+    // Store user info
+    setUserInfo({ email: emailOrMobile, is2FAEnabled })
+
+    // Check if 2FA is enabled
+    if (is2FAEnabled) {
+      // Generate and send Passcode
+      const newOtp = generateOTP()
+      setGeneratedOtp(newOtp)
+      // For demo purposes - OTP is displayed on screen
+      // In production, this would be sent via SMS/Email only
+
+      // Move to Passcode step
+      setStep('passcode')
+      setResendTimer(30)
+      setCanResend(false)
+
+      // Focus first OTP input
+      setTimeout(() => {
+        if (otpRefs.current[0]) {
+          otpRefs.current[0].focus()
+        }
+      }, 100)
+    } else {
+      // 2FA not enabled, directly login
+      sessionStorage.setItem('isAuthenticated', 'true')
+      sessionStorage.setItem('2fa_verified', 'true')
+      navigate('/dashboard')
+    }
   }
 
   const handleInputChange = (e) => {
     setEmailOrMobile(e.target.value)
+    // Clear error when user starts typing
+    if (error) {
+      setError('')
+    }
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
     // Clear error when user starts typing
     if (error) {
       setError('')
@@ -160,31 +212,22 @@ const Login = () => {
     const enteredOtp = otpToVerify || otp.join('')
 
     if (enteredOtp.length !== 6) {
-      setOtpError('Please enter complete 6-digit OTP')
+      setOtpError('Please enter complete 6-digit passcode')
       return
     }
 
-    // Verify OTP (In production, this would be an API call)
+    // Verify Passcode (In production, this would be an API call)
     if (enteredOtp === generatedOtp) {
       setOtpError('')
-      
+
       // Set user as authenticated
       sessionStorage.setItem('isAuthenticated', 'true')
-      
-      // Check if 2FA is enabled for this user
-      const is2FAEnabled = localStorage.getItem('2fa_enabled') === 'true'
-      
-      if (is2FAEnabled) {
-        // Redirect to 2FA verification
-        navigate('/2fa/verify', { state: { email: emailOrMobile } })
-      } else {
-        // Also mark 2FA as verified (not applicable) so ProtectedRoute works
-        sessionStorage.setItem('2fa_verified', 'true')
-        // Navigate to dashboard on successful verification
-        navigate('/dashboard')
-      }
+      sessionStorage.setItem('2fa_verified', 'true')
+
+      // Navigate to dashboard on successful verification
+      navigate('/dashboard')
     } else {
-      setOtpError('Invalid OTP. Please try again.')
+      setOtpError('Invalid passcode. Please try again.')
       // Clear OTP inputs
       setOtp(['', '', '', '', '', ''])
       otpRefs.current[0]?.focus()
@@ -194,10 +237,10 @@ const Login = () => {
   const handleResendOtp = () => {
     if (!canResend) return
 
-    // Generate new OTP
+    // Generate new Passcode
     const newOtp = generateOTP()
     setGeneratedOtp(newOtp)
-    // For demo purposes - OTP is displayed on screen
+    // For demo purposes - Passcode is displayed on screen
 
     // Reset timer and OTP inputs
     setResendTimer(30)
@@ -212,53 +255,7 @@ const Login = () => {
     setOtp(['', '', '', '', '', ''])
     setOtpError('')
     setGeneratedOtp('')
-  }
-
-  const handleTryAnotherWay = () => {
-    setStep('recovery')
-    setError('')
-  }
-
-  const handleRecoveryInputChange = (e) => {
-    setRecoveryEmail(e.target.value)
-    if (recoveryError) {
-      setRecoveryError('')
-    }
-  }
-
-  const handleRecoveryContinue = (e) => {
-    e.preventDefault()
-
-    const validationError = validateInput(recoveryEmail)
-
-    if (validationError) {
-      setRecoveryError(validationError)
-      return
-    }
-
-    // Move to email OTP confirmation step
-    setRecoveryError('')
-    setStep('email-otp')
-  }
-
-  const handleSendOtpToEmail = () => {
-    // Generate OTP for recovery
-    const newOtp = generateOTP()
-    setGeneratedOtp(newOtp)
-    // For demo purposes - OTP is displayed on screen
-
-    // Move to OTP verification step
-    setStep('otp')
-    setResendTimer(30)
-    setCanResend(false)
-    setEmailOrMobile(recoveryEmail) // Use recovery email for display
-
-    // Focus first OTP input
-    setTimeout(() => {
-      if (otpRefs.current[0]) {
-        otpRefs.current[0].focus()
-      }
-    }, 100)
+    setPassword('')
   }
 
   return (
@@ -309,14 +306,16 @@ const Login = () => {
                 <span className="logo-text">SclinNexus</span>
               </div>
               <h2 className="auth-form-title">
-                {step === 'input'
-                  ? 'Sign In'
-                  : step === 'recovery'
-                  ? 'Find Your Account'
-                  : step === 'email-otp'
-                  ? 'SclinNexus'
-                  : 'Verify OTP'}
+                {step === 'input' ? "Let's Sign you in" : 'Write the code sent'}
               </h2>
+              {step === 'input' && (
+                <p className="auth-form-subtitle">Sign in your account</p>
+              )}
+              {step === 'passcode' && (
+                <p className="auth-form-subtitle">
+                  A code has been sent to your number. Enter it in the box below.
+                </p>
+              )}
             </div>
 
             {step === 'input' ? (
@@ -325,7 +324,7 @@ const Login = () => {
                 <form onSubmit={handleSubmit} className="auth-form">
                   <div className="form-group">
                     <CFormLabel htmlFor="emailOrMobile" className="form-label">
-                      Enter your Email Address or Mobile Number *
+                      Email
                     </CFormLabel>
                     <CFormInput
                       type="text"
@@ -334,13 +333,43 @@ const Login = () => {
                       value={emailOrMobile}
                       onChange={handleInputChange}
                       className={`form-input ${error ? 'is-invalid' : ''}`}
-                      placeholder="Email or Mobile Number"
+                      placeholder="Enter Your Email Address"
                     />
+                  </div>
+
+                  <div className="form-group">
+                    <CFormLabel htmlFor="password" className="form-label">
+                      Password
+                    </CFormLabel>
+                    <div className="password-input-wrapper">
+                      <CFormInput
+                        type={showPassword ? 'text' : 'password'}
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className={`form-input ${error ? 'is-invalid' : ''}`}
+                        placeholder="Enter Your Password"
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? '👁️' : '👁️‍🗨️'}
+                      </button>
+                    </div>
                     {error && (
                       <div className="error-message">
                         {error}
                       </div>
                     )}
+                  </div>
+
+                  <div className="auth-links">
+                    <Link to="/forgot-password" className="link-primary">
+                      Forgot Password?
+                    </Link>
                   </div>
 
                   <CButton
@@ -352,129 +381,24 @@ const Login = () => {
                 </form>
 
                 {/* Sign Up Link */}
-                <div className="auth-footer-link">
-                  <span>Can't access? </span>
-                  <button
-                    type="button"
-                    className="link-primary link-button"
-                    onClick={handleTryAnotherWay}
-                  >
-                    Try another way
-                  </button>
-                </div>
-              </>
-            ) : step === 'recovery' ? (
-              <>
-                {/* Account Recovery Form */}
-                <div className="recovery-form">
-                  <p className="recovery-instruction">
-                    We need your registered email address or mobile number to find your account
-                  </p>
-
-                  <form onSubmit={handleRecoveryContinue} className="auth-form">
-                    <div className="form-group">
-                      <CFormLabel htmlFor="recoveryEmail" className="form-label">
-                        Enter your Email Address or Mobile Number *
-                      </CFormLabel>
-                      <CFormInput
-                        type="text"
-                        id="recoveryEmail"
-                        name="recoveryEmail"
-                        value={recoveryEmail}
-                        onChange={handleRecoveryInputChange}
-                        className={`form-input ${recoveryError ? 'is-invalid' : ''}`}
-                        placeholder="Email or Mobile Number"
-                      />
-                      {recoveryError && (
-                        <div className="error-message">
-                          {recoveryError}
-                        </div>
-                      )}
-                    </div>
-
-                    <CButton
-                      type="submit"
-                      className="auth-submit-btn"
-                    >
-                      Continue
-                    </CButton>
-                  </form>
-
-                  <div className="auth-footer-link">
-                    <button
-                      type="button"
-                      className="link-primary link-button"
-                      onClick={() => setStep('input')}
-                    >
-                      Back to Sign In
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : step === 'email-otp' ? (
-              <>
-                {/* Email OTP Confirmation */}
-                <div className="email-otp-confirmation">
-                  <div className="platform-icon">
-                    <span className="wifi-icon">📶</span>
-                  </div>
-
-                  <h3 className="email-otp-title">SclinNexus</h3>
-
-                  <p className="email-otp-instruction">
-                    You will receive an OTP on your registered email
-                  </p>
-
-                  <div className="masked-email-container">
-                    <CFormInput
-                      type="text"
-                      value={recoveryEmail.replace(/(.{3})(.*)(@.*)/, '$1*****$3')}
-                      readOnly
-                      className="masked-email-input"
-                    />
-                  </div>
-
-                  <CButton
-                    onClick={handleSendOtpToEmail}
-                    className="auth-submit-btn send-otp-btn"
-                  >
-                    Send OTP to Email
-                  </CButton>
-
-                  <div className="auth-footer-link">
-                    <button
-                      type="button"
-                      className="link-primary link-button"
-                      onClick={() => setStep('recovery')}
-                    >
-                      Back
-                    </button>
-                  </div>
-                </div>
+                {/* <div className="auth-footer-link">
+                  <span>Don't have an account? </span>
+                  <Link to="/register" className="link-primary">
+                    Sign up
+                  </Link>
+                </div> */}
               </>
             ) : (
               <>
-                {/* OTP Verification */}
+                {/* Passcode Verification */}
                 <div className="otp-verification">
-                  <p className="otp-instruction">
-                    We've sent a 6-digit OTP to
-                    <br />
-                    <strong>{emailOrMobile}</strong>
-                  </p>
+                  <p className="passcode-label">Enter The Code</p>
 
-                  {/* Demo OTP Display */}
+                  {/* Demo Passcode Display */}
                   <div className="demo-otp-display">
-                    <span className="demo-label">Demo OTP:</span>
+                    <span className="demo-label">Demo Passcode:</span>
                     <span className="demo-otp-code">{generatedOtp}</span>
                   </div>
-
-                  <button
-                    type="button"
-                    className="change-email-btn"
-                    onClick={handleChangeEmailOrMobile}
-                  >
-                    Change
-                  </button>
 
                   <div className="otp-inputs">
                     {otp.map((digit, index) => (
@@ -498,28 +422,32 @@ const Login = () => {
                     </div>
                   )}
 
+                  <div className="otp-resend-info">
+                    <span className="resend-info-text">
+                      A One-Time Code Has Been Sent To You.
+                    </span>
+                    {canResend ? (
+                      <button
+                        type="button"
+                        className="resend-link"
+                        onClick={handleResendOtp}
+                      >
+                        Resend
+                      </button>
+                    ) : (
+                      <span className="resend-timer-link">
+                        {String(Math.floor(resendTimer / 60)).padStart(2, '0')}:
+                        {String(resendTimer % 60).padStart(2, '0')}
+                      </span>
+                    )}
+                  </div>
+
                   <CButton
                     onClick={() => verifyOtp()}
                     className="auth-submit-btn verify-btn"
                   >
-                    Verify OTP
+                    Confirm
                   </CButton>
-
-                  <div className="otp-resend">
-                    {canResend ? (
-                      <button
-                        type="button"
-                        className="resend-btn"
-                        onClick={handleResendOtp}
-                      >
-                        Resend OTP
-                      </button>
-                    ) : (
-                      <span className="resend-timer">
-                        Resend OTP in {resendTimer}s
-                      </span>
-                    )}
-                  </div>
                 </div>
               </>
             )}
