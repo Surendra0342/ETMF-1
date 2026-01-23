@@ -75,30 +75,30 @@ const _nav = [
         name: 'Visual Builder',
         to: '/forms/visual-builder',
       },
-      {
-        component: CNavItem,
-        name: 'JSON Builder',
-        to: '/forms/builder',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'JSON Builder',
+      //   to: '/forms/builder',
+      // },
     ],
   },
-  {
-    component: CNavGroup,
-    name: 'Clinical Data',
-    icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Patients',
-        to: '/patients',
-      },
-      {
-        component: CNavItem,
-        name: 'Sites',
-        to: '/sites',
-      },
-    ],
-  },
+  // {
+  //   component: CNavGroup,
+  //   name: 'Clinical Data',
+  //   icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: 'Patients',
+  //       to: '/patients',
+  //     },
+  //     {
+  //       component: CNavItem,
+  //       name: 'Sites',
+  //       to: '/sites',
+  //     },
+  //   ],
+  // },
 
   // Other Section  
   {
@@ -114,29 +114,29 @@ const _nav = [
         name: 'Authentication',
         to: '/settings/authentication',
       },
-      {
-        component: CNavItem,
-        name: 'Email Templates',
-        to: '/settings/email-templates',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Email Templates',
+      //   to: '/settings/email-templates',
+      // },
       {
         component: CNavItem,
         name: 'Job Title',
         to: '/jobtitle',
       },
-      {
-        component: CNavItem,
-        name: 'Activity Log',
-        to: '/settings/activity-log',
-      },
+      // {
+      //   component: CNavItem,
+      //   name: 'Activity Log',
+      //   to: '/settings/activity-log',
+      // },
     ],
   },
-  {
-    component: CNavItem,
-    name: 'Help Center',
-    to: '/help',
-    icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Help Center',
+  //   to: '/help',
+  //   icon: <CIcon icon={cilInfo} customClassName="nav-icon" />,
+  // },
 ]
 
 export default _nav

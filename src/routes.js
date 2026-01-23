@@ -28,6 +28,7 @@ const Studies = React.lazy(() => import('./views/studies/Studies'))
 
 // Team Management
 const TeamMembers = React.lazy(() => import('./views/team/TeamMembers'))
+const DemoRequests = React.lazy(() => import('./views/DemoRequests'))
 
 // Administration
 const UserManagement = React.lazy(() => import('./views/administration/UserManagement'))
@@ -81,6 +82,7 @@ const routes = [
   // Administration Routes
   { path: '/users', name: 'User Management', element: UserManagement },
   { path: '/roles', name: 'Roles Management', element: RolesManagement },
+  {path: '/team/demo-requests', name: 'Demo Requests', element: DemoRequests },
 
   // Job Title Routes
   { path: '/jobtitle', name: 'Job Title', element: JobTitle },
