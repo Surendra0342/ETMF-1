@@ -754,7 +754,7 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   .landing-marquee-content {
     display: flex;
     gap: 3rem;
-    animation: marquee 30s linear infinite;
+    animation: marquee 10s linear infinite;
     width: max-content;
 
     &:hover {
@@ -772,21 +772,33 @@ $lp-gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
   }
 
   .landing-logo-item {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--lp-text-secondary);
-    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
     transition: all 0.3s ease;
-    white-space: nowrap;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     border-radius: 8px;
     background: var(--lp-marquee-item-bg);
     box-shadow: 0 2px 8px var(--lp-card-shadow);
 
+    img {
+      max-height: 50px;
+      max-width: 120px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      transition: filter 0.3s ease;
+    }
+
     &:hover {
       opacity: 1;
-      color: $lp-primary;
       transform: scale(1.05);
+
+      img {
+        filter: grayscale(0%);
+      }
     }
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -30,13 +30,50 @@ const SearchIcon = () => (
   </svg>
 )
 
+// Maximize icon component
+const MaximizeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+    <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+    <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+    <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+  </svg>
+)
+
+// Minimize icon component
+const MinimizeIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 14h6v6"/>
+    <path d="M20 10h-6V4"/>
+    <path d="M14 10l7-7"/>
+    <path d="M3 21l7-7"/>
+  </svg>
+)
+
 const AppHeader = () => {
   const headerRef = useRef()
   const navigate = useNavigate()
   const { colorMode, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        setIsFullscreen(true)
+      }).catch((err) => {
+        console.error('Error attempting to enable fullscreen:', err)
+      })
+    } else {
+      document.exitFullscreen().then(() => {
+        setIsFullscreen(false)
+      }).catch((err) => {
+        console.error('Error attempting to exit fullscreen:', err)
+      })
+    }
+  }
 
   const handleLogout = () => {
     // Clear all authentication data
@@ -52,8 +89,16 @@ const AppHeader = () => {
         headerRef.current.classList.toggle('shadow-sm', document.documentElement.scrollTop > 0)
     }
 
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
     document.addEventListener('scroll', handleScroll)
-    return () => document.removeEventListener('scroll', handleScroll)
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
   }, [])
 
   return (
@@ -79,6 +124,15 @@ const AppHeader = () => {
 
         {/* Right side - Theme toggle and User */}
         <CHeaderNav className="d-flex align-items-center gap-1">
+          {/* Fullscreen Toggle */}
+          <button
+            className="shadcn-icon-btn"
+            onClick={toggleFullscreen}
+            title={isFullscreen ? "Exit Fullscreen" : "Max View"}
+          >
+            {isFullscreen ? <MinimizeIcon /> : <MaximizeIcon />}
+          </button>
+
           {/* Theme Toggle */}
           <CDropdown variant="nav-item" placement="bottom-end">
             <CDropdownToggle className="shadcn-icon-btn" caret={false} title="Toggle theme">

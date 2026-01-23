@@ -31,6 +31,14 @@ import SclinTechLogo from '../../../assets/images/Sclintech_BB_logo.png'
 import Logo1 from '../../../assets/images/1.svg'
 import Logo2 from '../../../assets/images/2.svg'
 
+// Client Logos
+import AbbottLogo from '../../../assets/images/ClientLogos/abbott_logo.png'
+import AlkemLogo from '../../../assets/images/ClientLogos/alkem_logo.png'
+import AlphaMdLogo from '../../../assets/images/ClientLogos/alpha_md.png'
+import BharatBiotechLogo from '../../../assets/images/ClientLogos/bharat-biotech-logo.jpg'
+import CiplaLogo from '../../../assets/images/ClientLogos/cipla_logo.png'
+import DrReddysLogo from '../../../assets/images/ClientLogos/dr_reddys_logo.png'
+
 const LandingPage = () => {
   const navigate = useNavigate()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -207,10 +215,10 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
       {/* Header */}
-      <header className={`landing-header ${isScrolled ? 'scrolled' : ''}`}>
+      <header className={`landing-header ${isScrolled || activePage !== 'home' ? 'scrolled' : ''}`}>
         <div className="landing-header-content">
           <div className="landing-logo">
-            <img src={isScrolled ? Logo1 : Logo2} alt="SclinNexus" className="landing-logo-img" />
+            <img src={isScrolled || activePage !== 'home' ? Logo1 : Logo2} alt="SclinNexus" className="landing-logo-img" />
             <span className="landing-logo-text">SclinNexus</span>
           </div>
 
@@ -315,31 +323,24 @@ const LandingPage = () => {
           <p className="landing-trusted-label">Trusted by leading pharmaceutical and research organizations</p>
           <div className="landing-marquee">
             <div className="landing-marquee-content">
-              <div className="landing-logo-item">PharmaCorp</div>
-              <div className="landing-logo-item">BioResearch</div>
-              <div className="landing-logo-item">MedTrials</div>
-              <div className="landing-logo-item">ClinicalFirst</div>
-              <div className="landing-logo-item">HealthLabs</div>
-              <div className="landing-logo-item">NovoGen</div>
-              <div className="landing-logo-item">AstraZenith</div>
-              <div className="landing-logo-item">Merck Global</div>
-              <div className="landing-logo-item">Sanofi Labs</div>
-              <div className="landing-logo-item">Roche Sciences</div>
-              <div className="landing-logo-item">Pfizer Research</div>
-              <div className="landing-logo-item">GSK Pharma</div>
-              {/* Duplicate for seamless loop */}
-              <div className="landing-logo-item">PharmaCorp</div>
-              <div className="landing-logo-item">BioResearch</div>
-              <div className="landing-logo-item">MedTrials</div>
-              <div className="landing-logo-item">ClinicalFirst</div>
-              <div className="landing-logo-item">HealthLabs</div>
-              <div className="landing-logo-item">NovoGen</div>
-              <div className="landing-logo-item">AstraZenith</div>
-              <div className="landing-logo-item">Merck Global</div>
-              <div className="landing-logo-item">Sanofi Labs</div>
-              <div className="landing-logo-item">Roche Sciences</div>
-              <div className="landing-logo-item">Pfizer Research</div>
-              <div className="landing-logo-item">GSK Pharma</div>
+              <div className="landing-logo-item">
+                <img src={AbbottLogo} alt="Abbott" />
+              </div>
+              <div className="landing-logo-item">
+                <img src={AlkemLogo} alt="Alkem" />
+              </div>
+              <div className="landing-logo-item">
+                <img src={AlphaMdLogo} alt="Alpha MD" />
+              </div>
+              <div className="landing-logo-item">
+                <img src={BharatBiotechLogo} alt="Bharat Biotech" />
+              </div>
+              <div className="landing-logo-item">
+                <img src={CiplaLogo} alt="Cipla" />
+              </div>
+              <div className="landing-logo-item">
+                <img src={DrReddysLogo} alt="Dr. Reddy's" />
+              </div>
             </div>
           </div>
         </CContainer>
