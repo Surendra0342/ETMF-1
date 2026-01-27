@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { MetricCard, ShadcnTable, DeleteConfirmation, Card, CardContent } from '../../components'
-import { CButton, CForm, CFormInput, CFormLabel, CFormTextarea, CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody, CRow, CCol } from '@coreui/react'
+import { CButton, CForm, CFormInput, CFormLabel, CFormTextarea, CAccordion, CAccordionItem, CAccordionHeader, CAccordionBody, CRow, CCol, CFormCheck } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilArrowLeft } from '@coreui/icons'
 import './RolesManagement.scss'
@@ -43,12 +43,82 @@ const RolesManagement = () => {
     description: ''
   })
 
+  // Permissions for each section
   const accessControlSections = [
-    { id: 'dashboard', label: 'Dashboard' },
-    { id: 'sponsors-studies', label: 'Sponsors and Studies' },
-    { id: 'team-admin', label: 'Team Administration' },
-    { id: 'demo-requests', label: 'Demo Requests' }
+    {
+      id: 'dashboard',
+      label: 'Dashboard',
+      permissions: [
+        { id: 'dashboard-view', label: 'View Dashboard' },
+        { id: 'dashboard-export', label: 'Export Reports' },
+        { id: 'dashboard-analytics', label: 'View Analytics' },
+      ]
+    },
+    {
+      id: 'sponsors-studies',
+      label: 'Sponsors and Studies',
+      permissions: [
+        { id: 'sponsors-view', label: 'View Sponsors' },
+        { id: 'sponsors-create', label: 'Create Sponsors' },
+        { id: 'sponsors-edit', label: 'Edit Sponsors' },
+        { id: 'sponsors-delete', label: 'Delete Sponsors' },
+        { id: 'studies-view', label: 'View Studies' },
+        { id: 'studies-create', label: 'Create Studies' },
+        { id: 'studies-edit', label: 'Edit Studies' },
+        { id: 'studies-delete', label: 'Delete Studies' },
+      ]
+    },
+    {
+      id: 'team-admin',
+      label: 'Team Administration',
+      permissions: [
+        { id: 'team-view', label: 'View Team Members' },
+        { id: 'team-create', label: 'Add Team Members' },
+        { id: 'team-edit', label: 'Edit Team Members' },
+        { id: 'team-delete', label: 'Delete Team Members' },
+        { id: 'roles-manage', label: 'Manage Roles' },
+      ]
+    },
+    {
+      id: 'demo-requests',
+      label: 'Demo Requests',
+      permissions: [
+        { id: 'demo-view', label: 'View Demo Requests' },
+        { id: 'demo-respond', label: 'Respond to Requests' },
+        { id: 'demo-delete', label: 'Delete Requests' },
+      ]
+    }
   ]
+
+  // State for selected permissions
+  const [selectedPermissions, setSelectedPermissions] = useState({})
+
+  // Handle permission checkbox change
+  const handlePermissionChange = (permissionId, checked) => {
+    setSelectedPermissions(prev => ({
+      ...prev,
+      [permissionId]: checked
+    }))
+  }
+
+  // Handle select all for a section
+  const handleSelectAll = (section, checked) => {
+    const newPermissions = { ...selectedPermissions }
+    section.permissions.forEach(permission => {
+      newPermissions[permission.id] = checked
+    })
+    setSelectedPermissions(newPermissions)
+  }
+
+  // Check if all permissions in a section are selected
+  const isAllSelected = (section) => {
+    return section.permissions.every(permission => selectedPermissions[permission.id])
+  }
+
+  // Check if some permissions in a section are selected
+  const isSomeSelected = (section) => {
+    return section.permissions.some(permission => selectedPermissions[permission.id]) && !isAllSelected(section)
+  }
 
   const columns = [
     {
@@ -76,6 +146,7 @@ const RolesManagement = () => {
       description: ''
     })
     setMarkAsInactive(false)
+    setSelectedPermissions({})
   }
 
   const handleCreate = () => {
@@ -146,7 +217,7 @@ const RolesManagement = () => {
           <CCol xs={12}>
             <Card>
               <CardContent>
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="mb-4">
                   <CButton
                     color="light"
                     onClick={handleCancel}
@@ -156,7 +227,8 @@ const RolesManagement = () => {
                       gap: '0.5rem',
                       padding: '0.5rem 1rem',
                       border: '1px solid var(--border)',
-                      borderRadius: '6px'
+                      borderRadius: '6px',
+                      marginBottom: '1rem'
                     }}
                   >
                     <CIcon icon={cilArrowLeft} size="sm" />
@@ -187,22 +259,6 @@ const RolesManagement = () => {
                         />
                       </div>
                     </CCol>
-                    <CCol md={6}>
-                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="markAsInactive"
-                            checked={markAsInactive}
-                            onChange={(e) => setMarkAsInactive(e.target.checked)}
-                          />
-                          <label className="form-check-label" htmlFor="markAsInactive">
-                            Mark as Inactive
-                          </label>
-                        </div>
-                      </div>
-                    </CCol>
                   </CRow>
 
                   <CRow>
@@ -231,15 +287,38 @@ const RolesManagement = () => {
                           Define the actions and privileges assigned to this role within the Role Management module.
                         </p>
 
-                        <CAccordion flush>
+                        <CAccordion flush className="access-control-accordion">
                           {accessControlSections.map((section) => (
                             <CAccordionItem key={section.id} itemKey={section.id}>
                               <CAccordionHeader>
                                 {section.label}
                               </CAccordionHeader>
                               <CAccordionBody>
-                                <div className="p-3">
-                                  Permission settings for {section.label}
+                                <div className="permissions-container">
+                                  {/* Select All Checkbox */}
+                                  <div className="permission-item select-all">
+                                    <CFormCheck
+                                      id={`select-all-${section.id}`}
+                                      label="Select All"
+                                      checked={isAllSelected(section)}
+                                      indeterminate={isSomeSelected(section)}
+                                      onChange={(e) => handleSelectAll(section, e.target.checked)}
+                                    />
+                                  </div>
+                                  <div className="permissions-divider"></div>
+                                  {/* Individual Permission Checkboxes */}
+                                  <div className="permissions-grid">
+                                    {section.permissions.map((permission) => (
+                                      <div key={permission.id} className="permission-item">
+                                        <CFormCheck
+                                          id={permission.id}
+                                          label={permission.label}
+                                          checked={selectedPermissions[permission.id] || false}
+                                          onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
+                                        />
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </CAccordionBody>
                             </CAccordionItem>
@@ -249,16 +328,30 @@ const RolesManagement = () => {
                     </CCol>
                   </CRow>
 
-                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-                    <CButton color="secondary" onClick={handleCancel}>
-                      Cancel
-                    </CButton>
-                    <CButton
-                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
-                      onClick={handleSubmit}
-                    >
-                      {editMode ? 'Update Role' : 'Create Role'}
-                    </CButton>
+                  <div className="d-flex justify-content-between align-items-center mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="markAsInactive"
+                        checked={markAsInactive}
+                        onChange={(e) => setMarkAsInactive(e.target.checked)}
+                      />
+                      <label className="form-check-label" htmlFor="markAsInactive">
+                        Mark as Inactive
+                      </label>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <CButton color="secondary" onClick={handleCancel}>
+                        Cancel
+                      </CButton>
+                      <CButton
+                        style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                        onClick={handleSubmit}
+                      >
+                        {editMode ? 'Update Role' : 'Create Role'}
+                      </CButton>
+                    </div>
                   </div>
                 </CForm>
               </CardContent>

@@ -19,6 +19,7 @@ import { AppSidebarNav } from './AppSidebarNav'
 
 // sidebar nav config
 import navigation from '../_nav'
+import { ArrowLeftRight } from 'lucide-react'
 
 // Swap vertical icon component for brand dropdown
 const SwapIcon = () => (
@@ -89,7 +90,7 @@ const AppSidebar = () => {
               <span className="shadcn-brand-title">Clinical Trials</span>
               <span className="shadcn-brand-subtitle">Admin Dashboard</span>
             </div>
-            <span className="shadcn-brand-chevron"><SwapIcon /></span>
+            <span className="shadcn-brand-chevron"><ArrowLeftRight /></span>
           </CDropdownToggle>
           <CDropdownMenu className="w-100 shadcn-team-menu">
             <CDropdownItem className="shadcn-team-item active">
@@ -102,17 +103,17 @@ const AppSidebar = () => {
                 </svg>
               </div>
               <span className="shadcn-team-name">Clinical Trials</span>
-              <span className="shadcn-team-shortcut">⌘1</span>
+              <span className="shadcn-team-shortcut">1</span>
             </CDropdownItem>
             <CDropdownItem className="shadcn-team-item">
               <div className="shadcn-team-icon shadcn-team-icon-alt">A</div>
-              <span className="shadcn-team-name">Acme Inc</span>
-              <span className="shadcn-team-shortcut">⌘2</span>
+              <span className="shadcn-team-name">Clinical Trials</span>
+              <span className="shadcn-team-shortcut">2</span>
             </CDropdownItem>
             <CDropdownItem className="shadcn-team-item">
               <div className="shadcn-team-icon shadcn-team-icon-alt">AC</div>
-              <span className="shadcn-team-name">Acme Corp.</span>
-              <span className="shadcn-team-shortcut">⌘3</span>
+              <span className="shadcn-team-name">Clinical Trials</span>
+              <span className="shadcn-team-shortcut">3</span>
             </CDropdownItem>
             <CDropdownDivider />
             <CDropdownItem className="shadcn-add-team">

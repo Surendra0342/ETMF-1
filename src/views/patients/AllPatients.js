@@ -192,7 +192,7 @@ const AllPatients = () => {
           <CCol xs={12}>
             <Card>
               <CardContent>
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="mb-4">
                   <CButton
                     color="light"
                     onClick={handleCancel}
@@ -202,7 +202,8 @@ const AllPatients = () => {
                       gap: '0.5rem',
                       padding: '0.5rem 1rem',
                       border: '1px solid var(--border)',
-                      borderRadius: '6px'
+                      borderRadius: '6px',
+                      marginBottom: '1rem'
                     }}
                   >
                     <CIcon icon={cilArrowLeft} size="sm" />

@@ -176,13 +176,13 @@ const AppHeader = () => {
           </CDropdown>
 
           {/* Logout Button */}
-          <button
+          {/* <button
             className="shadcn-icon-btn"
             onClick={handleLogout}
             title="Logout"
           >
             <CIcon icon={cilAccountLogout} size="lg" />
-          </button>
+          </button> */}
         </CHeaderNav>
       </CContainer>
     </CHeader>

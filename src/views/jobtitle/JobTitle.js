@@ -139,7 +139,7 @@ const JobTitle = () => {
           <CCol xs={12}>
             <Card>
               <CardContent>
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="mb-4">
                   <CButton
                     color="light"
                     onClick={handleCancel}
@@ -149,7 +149,8 @@ const JobTitle = () => {
                       gap: '0.5rem',
                       padding: '0.5rem 1rem',
                       border: '1px solid var(--border)',
-                      borderRadius: '6px'
+                      borderRadius: '6px',
+                      marginBottom: '1rem'
                     }}
                   >
                     <CIcon icon={cilArrowLeft} size="sm" />
@@ -180,22 +181,6 @@ const JobTitle = () => {
                         />
                       </div>
                     </CCol>
-                    <CCol md={6}>
-                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="markAsInactive"
-                            checked={markAsInactive}
-                            onChange={(e) => setMarkAsInactive(e.target.checked)}
-                          />
-                          <label className="form-check-label" htmlFor="markAsInactive">
-                            Mark as Inactive
-                          </label>
-                        </div>
-                      </div>
-                    </CCol>
                   </CRow>
 
                   <CRow>
@@ -216,16 +201,30 @@ const JobTitle = () => {
                     </CCol>
                   </CRow>
 
-                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-                    <CButton color="secondary" onClick={handleCancel}>
-                      Cancel
-                    </CButton>
-                    <CButton
-                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
-                      onClick={handleSubmit}
-                    >
-                      {editMode ? 'Update Job Title' : 'Create Job Title'}
-                    </CButton>
+                  <div className="d-flex justify-content-between align-items-center mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="markAsInactive"
+                        checked={markAsInactive}
+                        onChange={(e) => setMarkAsInactive(e.target.checked)}
+                      />
+                      <label className="form-check-label" htmlFor="markAsInactive">
+                        Mark as Inactive
+                      </label>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <CButton color="secondary" onClick={handleCancel}>
+                        Cancel
+                      </CButton>
+                      <CButton
+                        style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                        onClick={handleSubmit}
+                      >
+                        {editMode ? 'Update Job Title' : 'Create Job Title'}
+                      </CButton>
+                    </div>
                   </div>
                 </CForm>
               </CardContent>

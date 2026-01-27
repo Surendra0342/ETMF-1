@@ -2,7 +2,98 @@ import { useState } from 'react'
 import { CCol, CRow, CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBriefcase, cilBook, cilCheckCircle, cilPeople, cilArrowLeft } from '@coreui/icons'
-import { Card, CardContent, ShadcnTable, DeleteConfirmation } from 'src/components'
+import { Card, CardContent, ShadcnTable, DeleteConfirmation, CountrySelect } from 'src/components'
+
+// Country → City → Postal Code hierarchical data
+const locationData = {
+  'United States': {
+    cities: [
+      { value: 'new-york', label: 'New York', postalCodes: ['10001', '10002', '10003', '10004', '10005'], defaultPostal: '10001' },
+      { value: 'los-angeles', label: 'Los Angeles', postalCodes: ['90001', '90002', '90003', '90004', '90005'], defaultPostal: '90001' },
+      { value: 'chicago', label: 'Chicago', postalCodes: ['60601', '60602', '60603', '60604', '60605'], defaultPostal: '60601' },
+      { value: 'houston', label: 'Houston', postalCodes: ['77001', '77002', '77003', '77004', '77005'], defaultPostal: '77001' },
+      { value: 'phoenix', label: 'Phoenix', postalCodes: ['85001', '85002', '85003', '85004', '85005'], defaultPostal: '85001' },
+      { value: 'san-francisco', label: 'San Francisco', postalCodes: ['94102', '94103', '94104', '94105', '94107'], defaultPostal: '94102' },
+    ]
+  },
+  'India': {
+    cities: [
+      { value: 'mumbai', label: 'Mumbai', postalCodes: ['400001', '400002', '400003', '400004', '400005'], defaultPostal: '400001' },
+      { value: 'delhi', label: 'Delhi', postalCodes: ['110001', '110002', '110003', '110004', '110005'], defaultPostal: '110001' },
+      { value: 'bangalore', label: 'Bangalore', postalCodes: ['560001', '560002', '560003', '560004', '560005'], defaultPostal: '560001' },
+      { value: 'chennai', label: 'Chennai', postalCodes: ['600001', '600002', '600003', '600004', '600005'], defaultPostal: '600001' },
+      { value: 'hyderabad', label: 'Hyderabad', postalCodes: ['500001', '500002', '500003', '500004', '500005'], defaultPostal: '500001' },
+      { value: 'kolkata', label: 'Kolkata', postalCodes: ['700001', '700002', '700003', '700004', '700005'], defaultPostal: '700001' },
+    ]
+  },
+  'United Kingdom': {
+    cities: [
+      { value: 'london', label: 'London', postalCodes: ['EC1A', 'EC2A', 'EC3A', 'WC1A', 'WC2A'], defaultPostal: 'EC1A' },
+      { value: 'manchester', label: 'Manchester', postalCodes: ['M1', 'M2', 'M3', 'M4', 'M5'], defaultPostal: 'M1' },
+      { value: 'birmingham', label: 'Birmingham', postalCodes: ['B1', 'B2', 'B3', 'B4', 'B5'], defaultPostal: 'B1' },
+      { value: 'liverpool', label: 'Liverpool', postalCodes: ['L1', 'L2', 'L3', 'L4', 'L5'], defaultPostal: 'L1' },
+      { value: 'edinburgh', label: 'Edinburgh', postalCodes: ['EH1', 'EH2', 'EH3', 'EH4', 'EH5'], defaultPostal: 'EH1' },
+    ]
+  },
+  'Germany': {
+    cities: [
+      { value: 'berlin', label: 'Berlin', postalCodes: ['10115', '10117', '10119', '10178', '10179'], defaultPostal: '10115' },
+      { value: 'munich', label: 'Munich', postalCodes: ['80331', '80333', '80335', '80336', '80337'], defaultPostal: '80331' },
+      { value: 'frankfurt', label: 'Frankfurt', postalCodes: ['60311', '60313', '60314', '60316', '60318'], defaultPostal: '60311' },
+      { value: 'hamburg', label: 'Hamburg', postalCodes: ['20095', '20097', '20099', '20144', '20146'], defaultPostal: '20095' },
+    ]
+  },
+  'France': {
+    cities: [
+      { value: 'paris', label: 'Paris', postalCodes: ['75001', '75002', '75003', '75004', '75005'], defaultPostal: '75001' },
+      { value: 'lyon', label: 'Lyon', postalCodes: ['69001', '69002', '69003', '69004', '69005'], defaultPostal: '69001' },
+      { value: 'marseille', label: 'Marseille', postalCodes: ['13001', '13002', '13003', '13004', '13005'], defaultPostal: '13001' },
+    ]
+  },
+  'Canada': {
+    cities: [
+      { value: 'toronto', label: 'Toronto', postalCodes: ['M5A', 'M5B', 'M5C', 'M5E', 'M5G'], defaultPostal: 'M5A' },
+      { value: 'vancouver', label: 'Vancouver', postalCodes: ['V5K', 'V5L', 'V5M', 'V5N', 'V5P'], defaultPostal: 'V5K' },
+      { value: 'montreal', label: 'Montreal', postalCodes: ['H2X', 'H2Y', 'H2Z', 'H3A', 'H3B'], defaultPostal: 'H2X' },
+    ]
+  },
+  'Australia': {
+    cities: [
+      { value: 'sydney', label: 'Sydney', postalCodes: ['2000', '2001', '2002', '2003', '2004'], defaultPostal: '2000' },
+      { value: 'melbourne', label: 'Melbourne', postalCodes: ['3000', '3001', '3002', '3003', '3004'], defaultPostal: '3000' },
+      { value: 'brisbane', label: 'Brisbane', postalCodes: ['4000', '4001', '4002', '4003', '4004'], defaultPostal: '4000' },
+    ]
+  },
+  'Japan': {
+    cities: [
+      { value: 'tokyo', label: 'Tokyo', postalCodes: ['100-0001', '100-0002', '100-0003', '100-0004', '100-0005'], defaultPostal: '100-0001' },
+      { value: 'osaka', label: 'Osaka', postalCodes: ['530-0001', '530-0002', '530-0003', '530-0004', '530-0005'], defaultPostal: '530-0001' },
+      { value: 'kyoto', label: 'Kyoto', postalCodes: ['600-8001', '600-8002', '600-8003', '600-8004', '600-8005'], defaultPostal: '600-8001' },
+    ]
+  },
+  'Singapore': {
+    cities: [
+      { value: 'singapore', label: 'Singapore', postalCodes: ['018956', '018957', '018958', '018959', '018960'], defaultPostal: '018956' },
+    ]
+  },
+  'United Arab Emirates': {
+    cities: [
+      { value: 'dubai', label: 'Dubai', postalCodes: ['00000'], defaultPostal: '00000' },
+      { value: 'abu-dhabi', label: 'Abu Dhabi', postalCodes: ['00000'], defaultPostal: '00000' },
+    ]
+  },
+}
+
+// Helper function to get cities for a country
+const getCitiesForCountry = (country) => {
+  return locationData[country]?.cities || []
+}
+
+// Helper function to get city data
+const getCityData = (country, cityValue) => {
+  const cities = getCitiesForCountry(country)
+  return cities.find(c => c.value === cityValue)
+}
 
 const Sponsors = () => {
   const [showForm, setShowForm] = useState(false)
@@ -193,7 +284,7 @@ const Sponsors = () => {
           <CCol xs={12}>
             <Card>
               <CardContent>
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="mb-4">
                   <CButton
                     color="light"
                     onClick={handleCancel}
@@ -203,7 +294,8 @@ const Sponsors = () => {
                       gap: '0.5rem',
                       padding: '0.5rem 1rem',
                       border: '1px solid var(--border)',
-                      borderRadius: '6px'
+                      borderRadius: '6px',
+                      marginBottom: '1rem'
                     }}
                   >
                     <CIcon icon={cilArrowLeft} size="sm" />
@@ -220,10 +312,15 @@ const Sponsors = () => {
                 </div>
 
                 <CForm>
-                  <CRow>
-                    <CCol md={6}>
-                      <div className="mb-3">
-                        <CFormLabel htmlFor="sponsorName">Sponsor Name *</CFormLabel>
+                  {/* Sponsor Information Section */}
+                  <div className="mb-4">
+                    <h6 style={{ fontWeight: 600, marginBottom: '1rem', color: 'var(--foreground)' }}>
+                      Sponsor Information
+                    </h6>
+                    <CRow>
+                      <CCol md={6}>
+                        <div className="mb-3">
+                          <CFormLabel htmlFor="sponsorName">Sponsor Name *</CFormLabel>
                         <CFormInput
                           type="text"
                           id="sponsorName"
@@ -296,13 +393,19 @@ const Sponsors = () => {
                           onChange={(e) => setFormData({ ...formData, websiteAddress: e.target.value })}
                         />
                       </div>
-                    </CCol>
-                  </CRow>
+                      </CCol>
+                    </CRow>
+                  </div>
 
-                  <CRow>
-                    <CCol md={6}>
-                      <div className="mb-3">
-                        <CFormLabel htmlFor="addressLine1">Address Line 1</CFormLabel>
+                  {/* Address Information Section */}
+                  <div className="mb-4" style={{ borderTop: '1px solid var(--border)', paddingTop: '1.5rem' }}>
+                    <h6 style={{ fontWeight: 600, marginBottom: '1rem', color: 'var(--foreground)' }}>
+                      Address Information
+                    </h6>
+                    <CRow>
+                      <CCol md={6}>
+                        <div className="mb-3">
+                          <CFormLabel htmlFor="addressLine1">Address Line 1</CFormLabel>
                         <CFormInput
                           type="text"
                           id="addressLine1"
@@ -327,30 +430,41 @@ const Sponsors = () => {
                   <CRow>
                     <CCol md={6}>
                       <div className="mb-3">
-                        <CFormLabel htmlFor="city">City *</CFormLabel>
-                        <CFormSelect
-                          id="city"
-                          value={formData.city}
-                          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        >
-                          <option value="">Select city</option>
-                          <option value="new-york">New York</option>
-                          <option value="los-angeles">Los Angeles</option>
-                          <option value="chicago">Chicago</option>
-                        </CFormSelect>
+                        <CountrySelect
+                          id="country"
+                          label="Country"
+                          value={formData.country}
+                          onChange={(value) => setFormData({
+                            ...formData,
+                            country: value,
+                            city: '',
+                            postalCode: '',
+                            district: ''
+                          })}
+                        />
                       </div>
                     </CCol>
                     <CCol md={6}>
                       <div className="mb-3">
-                        <CFormLabel htmlFor="postalCode">Postal Code</CFormLabel>
+                        <CFormLabel htmlFor="city">City *</CFormLabel>
                         <CFormSelect
-                          id="postalCode"
-                          value={formData.postalCode}
-                          onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                          id="city"
+                          value={formData.city}
+                          onChange={(e) => {
+                            const selectedCity = e.target.value
+                            const cityData = getCityData(formData.country, selectedCity)
+                            setFormData({
+                              ...formData,
+                              city: selectedCity,
+                              postalCode: cityData ? cityData.defaultPostal : ''
+                            })
+                          }}
+                          disabled={!formData.country}
                         >
-                          <option value="">Select postal code</option>
-                          <option value="10001">10001</option>
-                          <option value="90001">90001</option>
+                          <option value="">Select city</option>
+                          {getCitiesForCountry(formData.country).map(city => (
+                            <option key={city.value} value={city.value}>{city.label}</option>
+                          ))}
                         </CFormSelect>
                       </div>
                     </CCol>
@@ -359,30 +473,35 @@ const Sponsors = () => {
                   <CRow>
                     <CCol md={6}>
                       <div className="mb-3">
-                        <CFormLabel htmlFor="district">District *</CFormLabel>
+                        <CFormLabel htmlFor="postalCode">Postal Code</CFormLabel>
                         <CFormSelect
-                          id="district"
-                          value={formData.district}
-                          onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                          id="postalCode"
+                          value={formData.postalCode}
+                          onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                          disabled={!formData.city}
                         >
-                          <option value="">Select district</option>
-                          <option value="manhattan">Manhattan</option>
-                          <option value="brooklyn">Brooklyn</option>
+                          <option value="">Select postal code</option>
+                          {formData.city && getCityData(formData.country, formData.city)?.postalCodes.map(code => (
+                            <option key={code} value={code}>{code}</option>
+                          ))}
                         </CFormSelect>
                       </div>
                     </CCol>
                     <CCol md={6}>
                       <div className="mb-3">
-                        <CFormLabel htmlFor="country">Country</CFormLabel>
+                        <CFormLabel htmlFor="district">District *</CFormLabel>
                         <CFormSelect
-                          id="country"
-                          value={formData.country}
-                          onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                          id="district"
+                          value={formData.district}
+                          onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                          disabled={!formData.city}
                         >
-                          <option value="">Select country</option>
-                          <option value="india">India</option>
-                          <option value="usa">United States</option>
-                          <option value="uk">United Kingdom</option>
+                          <option value="">Select district</option>
+                          <option value="central">Central</option>
+                          <option value="north">North</option>
+                          <option value="south">South</option>
+                          <option value="east">East</option>
+                          <option value="west">West</option>
                         </CFormSelect>
                       </div>
                     </CCol>
@@ -402,35 +521,34 @@ const Sponsors = () => {
                           <option value="ca">California</option>
                         </CFormSelect>
                       </div>
-                    </CCol>
-                    <CCol md={6}>
-                      <div className="mb-3 d-flex align-items-end" style={{ height: '100%', paddingBottom: '1rem' }}>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="markAsInactive"
-                            checked={formData.markAsInactive}
-                            onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
-                          />
-                          <label className="form-check-label" htmlFor="markAsInactive">
-                            Mark as Inactive
-                          </label>
-                        </div>
-                      </div>
-                    </CCol>
-                  </CRow>
+                      </CCol>
+                    </CRow>
+                  </div>
 
-                  <div className="d-flex gap-2 justify-content-end mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
-                    <CButton color="secondary" onClick={handleCancel}>
-                      Cancel
-                    </CButton>
-                    <CButton
-                      style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
-                      onClick={handleSubmit}
-                    >
-                      {editMode ? 'Update Sponsor' : 'Create Sponsor'}
-                    </CButton>
+                  <div className="d-flex justify-content-between align-items-center mt-4 pt-3" style={{ borderTop: '1px solid var(--border)' }}>
+                    <div className="form-check form-switch">
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        id="markAsInactive"
+                        checked={formData.markAsInactive}
+                        onChange={(e) => setFormData({ ...formData, markAsInactive: e.target.checked })}
+                      />
+                      <label className="form-check-label" htmlFor="markAsInactive">
+                        Mark as Inactive
+                      </label>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <CButton color="secondary" onClick={handleCancel}>
+                        Cancel
+                      </CButton>
+                      <CButton
+                        style={{ background: '#16a34a', borderColor: '#16a34a', color: 'white' }}
+                        onClick={handleSubmit}
+                      >
+                        {editMode ? 'Update Sponsor' : 'Create Sponsor'}
+                      </CButton>
+                    </div>
                   </div>
                 </CForm>
               </CardContent>

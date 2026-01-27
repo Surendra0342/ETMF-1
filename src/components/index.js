@@ -9,6 +9,7 @@ import ShadcnTable from './ShadcnTable'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, MetricCard } from './Card/Card'
 import Button from './Button/Button'
 import DeleteConfirmation from './DeleteConfirmation/DeleteConfirmation'
+import CountrySelect from './CountrySelect'
 
 export {
   AppBreadcrumb,
@@ -28,4 +29,5 @@ export {
   MetricCard,
   Button,
   DeleteConfirmation,
+  CountrySelect,
 }
